@@ -1,8 +1,16 @@
 import "@/app//globals.css";
-import { Gabarito } from "next/font/google";
+import { Manrope } from "next/font/google";
 import Navbar from "@/components/Navbar";
 
-const gabarito = Gabarito({ subsets: ["latin"] });
+const manrope = Manrope({
+  preload: true,
+  adjustFontFallback: true,
+  display: "swap",
+  subsets: ["latin", "latin-ext"],
+  style: ["normal"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
+});
 
 export const metadata = {
   title: "AnimeList",
@@ -13,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${gabarito.className} bg-color-dark`}
+        className={`${manrope.className} bg-Black-8`}
         suppressHydrationWarning={true}
       >
         <Navbar />
