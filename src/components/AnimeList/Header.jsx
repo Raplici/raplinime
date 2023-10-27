@@ -4,7 +4,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 const Header = ({ title, linkHref }) => {
   return (
     <div className="flex justify-between items-center text-color-primary">
-      <p className=" text-Absolute-White font-bold text-lg leading-6 md:text-2xl md:leading-8">
+      <p className=" text-Absolute-White font-bold text-base leading-6 md:text-2xl md:leading-8">
         {title}
       </p>
       {linkHref ? (

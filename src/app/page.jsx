@@ -12,7 +12,7 @@ const Page = async () => {
       <section className="container flex flex-col gap-8 pt-5 md:flex-row md:pt-6">
         <Group title="Anime">
           <Header title="Paling Populer" linkHref="/populer" />
-          <AnimeList api={topAnime} />
+          <AnimeList api={topAnime} titleOnly={false}/>
         </Group>
       </section>
     </main>

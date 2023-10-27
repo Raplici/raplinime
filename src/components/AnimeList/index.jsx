@@ -1,9 +1,10 @@
+import { Star } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 
-const AnimeList = ({ api }) => {
+const AnimeList = ({ api, titleOnly = true }) => {
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-5 sm:grid-cols-3">
+    <div className="grid grid-cols-2 gap-4 md:gap-5 md:grid-cols-5 sm:grid-cols-3">
       {api.data?.map((anime, index) => {
         return (
           <Link
@@ -16,9 +17,25 @@ const AnimeList = ({ api }) => {
               alt="..."
               width={350}
               height={350}
-              className="object-cover aspect-square object-center"
+              className="object-cover aspect-square object-center rounded-xl"
             />
-            <h3 className="font-bold text-lg leading-6 md:text-xl md:leading-7 py-4 ">{anime.title}</h3>
+            {titleOnly ? (
+              <p className="font-bold text-sm leading-5 line-clamp-2 pt-2 md:text-xl md:leading-7 ">
+                {anime.title}
+              </p>
+            ) : (
+              <div className="text-sm leading-5 line-clamp-2 pt-2 md:text-xl md:leading-7">
+                <div className="flex justify-between items-center text-xs text-Grey-60 md:text-base">
+                  <p>{anime.type}</p>
+                  <div className="flex items-center">
+                    <Star size={14} className="mx-1" />
+                    <p>{anime.score}</p>
+                  </div>
+                </div>
+                <p className="font-bold">{anime.title}</p>
+              </div>
+            )}
+            <div></div>
           </Link>
         );
       })}

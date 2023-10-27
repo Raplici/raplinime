@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="container flex items-center gap-10 justify-between">
       <Link href="/" className="shrink-0">
-        <p className="h-9 font-bold text-3xl text-Absolute-White">AnimeVibe</p>
+        <p className=" font-bold text-Absolute-White text-2xl md:text-3xl md:h-9">AnimeVibe</p>
       </Link>
 
       <InputSearch />
