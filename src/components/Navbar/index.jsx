@@ -3,12 +3,13 @@ import InputSearch from "@/components/Navbar/InputSearch";
 
 const Navbar = () => {
   return (
-    <header className="flex flex-col justify-between p-4 md:flex-row md:px-40 md:items-center">
-      <Link className="font-bold text-3xl text-Absolute-White" href="/">
-        AnimeVibe
+    <nav className="container flex items-center gap-10 justify-between">
+      <Link href="/" className="shrink-0">
+        <p className="h-9 font-bold text-3xl text-Absolute-White">AnimeVibe</p>
       </Link>
+
       <InputSearch />
-    </header>
+    </nav>
   );
 };
 

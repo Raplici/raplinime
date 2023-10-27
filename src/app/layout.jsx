@@ -13,7 +13,7 @@ const manrope = Manrope({
 });
 
 export const metadata = {
-  title: "AnimeList",
+  title: "AnimeVibe",
   description: "Website Anime Indonesia",
 };
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} bg-Black-8`}
+        className={`${manrope.className} bg-Black-8 px-5 pt-5 md:pt-12`}
         suppressHydrationWarning={true}
       >
         <Navbar />

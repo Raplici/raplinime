@@ -1,15 +1,18 @@
 import Link from "next/link";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
-const Header = ({ title, linkHref, linkTitle }) => {
+const Header = ({ title, linkHref }) => {
   return (
-    <div className="flex justify-between p-4 items-center text-color-primary">
-      <h1 className="text-2xl font-bold">{title}</h1>
-      {linkHref && linkTitle ? (
+    <div className="flex justify-between items-center text-color-primary">
+      <p className=" text-Absolute-White font-bold text-lg leading-6 md:text-2xl md:leading-8">
+        {title}
+      </p>
+      {linkHref ? (
         <Link
-          href={linkHref}
-          className="text-sm underline hover:text-color-accent transition-all md:text-xl"
+          href="/populer"
+          className=" text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg md:p-3"
         >
-          {linkTitle}
+          <ArrowRight size={20} />
         </Link>
       ) : null}
     </div>

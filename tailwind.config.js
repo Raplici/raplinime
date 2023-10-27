@@ -14,6 +14,14 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      strokeWidth: {
+        1.5: "1.5px",
+      },
+      keyframes: {
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
     },
     //basic custom color
     colors: {
@@ -56,6 +64,19 @@ module.exports = {
         95: "#F1F1F3",
         97: "#F7F7F8",
         99: "#FCFCFD",
+      },
+    },
+    screens: {
+      xs: "360px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1200px",
+      "2xl": "1440px",
+    },
+    container: {
+      center: true,
+      screens: {
+        md: "100rem",
       },
     },
   },
