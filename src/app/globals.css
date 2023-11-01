@@ -18,15 +18,11 @@ img {
     -o-transition: .3s ease all;
 }
 
-img:hover {
-    scale: 102%;
-}
-
 .loading {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: conic-gradient(#0000 10%, #ffc639);
+    background: conic-gradient(#0000 10%, #ff3333);
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
     mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
     animation: s3 0.5s infinite linear;

@@ -1,51 +1,52 @@
 "use client";
 
 import { useState } from "react";
+import { Play, XCircle } from "@phosphor-icons/react/dist/ssr";
 import YouTube from "react-youtube";
 
 const VideoPlayer = ({ youtubeId }) => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const handleVideoPlayer = () => {
-    setIsOpen((prevState) => !prevState);
-  };
+  const [showVideo, setShowVideo] = useState(false);
 
   const option = {
-    width: "300",
-    height: "250",
+    height: `100%`,
+    width: `100%`,
+    playerVars: {
+      autoplay: 1,
+    },
   };
 
-  const Player = () => {
-    return (
-      <div className="fixed bottom-2 right-2">
-        <button
-          onClick={handleVideoPlayer}
-          className="text-color-primary float-right bg-color-secondary px-3 mb-1"
-        >
-          X
-        </button>
-        <YouTube
-          videoId={youtubeId}
-          onReady={(e) => e.target.pauseVideo}
-          opts={option}
-          onError={() => alert("Video is unavailable")}
-        />
-      </div>
-    );
-  };
-
-  const ButtonOpenPlayer = () => {
-    return (
+  return (
+    <div className="flex w-full md:w-auto">
       <button
-        onClick={handleVideoPlayer}
-        className="fixed bottom-5 right-5 w-32 bg-color-primary text-color-dark tetx-xl hover:bg-color-accent transition-all shadow-xl rounded"
+        onClick={() => setShowVideo(true)}
+        className=" flex justify-center bg-Red-45 rounded-lg px-5 py-3.5 gap-2 font-semibold text-lg items-center w-full md:w-auto "
       >
-        Tonton Trailer
+        <Play size={24} weight="fill" />
+        Play Trailer
       </button>
-    );
-  };
 
-  return isOpen ? <Player /> : <ButtonOpenPlayer />;
+      {showVideo && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center ">
+          <div className=" w-2/3 h-1/6 md:h-1/4 lg:h-3/4 ">
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowVideo(false)}
+                className=" text-Absolute-White bg-transparent right-12"
+              >
+                <XCircle size={32} weight="bold" />
+              </button>
+            </div>
+
+            <YouTube
+              videoId={youtubeId}
+              opts={option}
+              className="w-full h-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default VideoPlayer;

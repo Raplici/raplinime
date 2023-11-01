@@ -14,10 +14,10 @@ const AnimeList = ({ api, titleOnly = true }) => {
           >
             <Image
               src={anime.images.webp.large_image_url}
-              alt="..."
+              alt={anime.images.jpg.large_image_url}
               width={350}
               height={350}
-              className="object-cover aspect-square object-center rounded-xl"
+              className="object-cover aspect-square object-center rounded-xl hover:scale-102"
             />
             {titleOnly ? (
               <p className="font-bold text-sm leading-5 line-clamp-2 pt-2 md:text-xl md:leading-7 ">
