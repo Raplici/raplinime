@@ -1,23 +1,8 @@
-"use client";
-
 import { getAnimeResponse } from "@/app/libs/api-libs";
-import { useEffect, useState } from "react";
 import Group from "@/components/Group";
 
-const Information = () => {
-  const [anime, setAnime] = useState([]);
-
-  const fetchData = async () => {
-    var url = window.location.href;
-    var parts = url.split("/");
-    var id = parts[parts.length - 1];
-    const data = await getAnimeResponse(`anime/${id}`);
-    setAnime(data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+const Information = async ({ id }) => {
+  const anime = await getAnimeResponse(`anime/${id}`);
 
   return (
     <Group className="md:grid md:grid-cols-2 lg:flex lg:flex-col bg-Black-10 gap-2.5 md:gap-3.5">

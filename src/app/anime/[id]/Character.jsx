@@ -6,44 +6,40 @@ import { CaretDown, CaretUp } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Group from "@/components/Group";
 
-const Character = () => {
+const Character = ({ id }) => {
   const [characters, setCharacters] = useState([]);
   const [showMore, setShowMore] = useState(false);
-
-  const fetchData = async () => {
-    var url = window.location.href;
-    var parts = url.split("/");
-    var id = parts[parts.length - 1];
-    const data = await getAnimeResponse(`anime/${id}/characters`);
-    setCharacters(data);
-  };
+  const [sliceCount, setSliceCount] = useState(4);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAnimeResponse(`anime/${id}/characters`);
+      setCharacters(data);
+    };
+
     fetchData();
-  }, []);
+
+    const handleWindowSizeChange = () => {
+      if (window.innerWidth >= 1280) {
+        setSliceCount(8);
+      } else if (window.innerWidth >= 768) {
+        setSliceCount(6);
+      } else {
+        setSliceCount(4);
+      }
+    };
+
+    handleWindowSizeChange();
+    window.addEventListener("resize", handleWindowSizeChange);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, [id]);
 
   const handlerOnClick = () => {
     setShowMore(!showMore);
   };
-
-  const [sliceCount, setSliceCount] = useState(4); 
-  const handleWindowSizeChange = () => {
-    if (window.innerWidth >= 1280) {
-      setSliceCount(8);
-    } else if (window.innerWidth >= 768) {
-      setSliceCount(6);
-    } else {
-      setSliceCount(4);
-    }
-  };
-
-  useEffect(() => {
-    handleWindowSizeChange();
-    window.addEventListener("resize", handleWindowSizeChange);
-    return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, []);
 
   return (
     <Group className="bg-Black-10 gap-2.5 md:gap-3.5">

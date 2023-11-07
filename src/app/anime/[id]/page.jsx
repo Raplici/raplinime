@@ -41,11 +41,11 @@ const Page = async ({ params: { id } }) => {
             <p className="text-justify">{anime.data.synopsis}</p>
           </Group>
 
-          <Character />
+          <Character id={id} />
         </div>
 
         <div className="order-first lg:order-last lg:w-1/4">
-          <Information />
+          <Information id={id} />
         </div>
       </section>
     </main>
