@@ -25,6 +25,7 @@ module.exports = {
     },
     //basic custom color
     colors: {
+      transparent: "transparent",
       color: {
         primary: "#eeeeee",
         accent: "#ffc639",
