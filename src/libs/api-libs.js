@@ -6,7 +6,18 @@ export const getAnimeResponse = async (resource, query) => {
   return anime;
 };
 
-export const getNestedAnimeResponse = async(resource, objectProperty) => {
-  const response = await getAnimeResponse(resource)
-  return response.data.flatMap(item => item.entry)
-}
+export const getNestedAnimeResponse = async (resource, objectProperty) => {
+  const response = await getAnimeResponse(resource);
+  return response.data.flatMap((item) => item[objectProperty]);
+};
+
+export const reproduce = (data, gap) => {
+  const startIndex = ~~(Math.random() * (data.length - gap) + 1);
+  const lastIndex = startIndex + gap; 
+
+  const response = {
+    data: data.slice(startIndex, lastIndex)
+  }
+  
+  return response
+};
