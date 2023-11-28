@@ -1,5 +1,6 @@
 import Link from "next/link";
 import InputSearch from "@/components/Navbar/InputSearch";
+import UserActionButton from "./UserActionButton";
 
 const Navbar = () => {
   return (
@@ -9,6 +10,7 @@ const Navbar = () => {
           CUYANIMELIST
         </Link>
         <InputSearch />
+        <UserActionButton/>
       </div>
     </header>
   );
