@@ -1,17 +1,34 @@
 import AnimeList from "@/components/AnimeList";
 import Header from "@/components/AnimeList/Header";
-import { getAnimeResponse } from "@/app/libs/api-libs";
+import {
+  getAnimeResponse,
+  getNestedAnimeResponse,
+  reproduce,
+} from "@/libs/api-libs";
 import Group from "@/components/Group";
 
 const Page = async () => {
   const topAnime = await getAnimeResponse("top/anime", "limit=10");
 
+  let recommendedAnime = await getNestedAnimeResponse(
+    "recommendations/anime",
+    "entry"
+  );
+  recommendedAnime = reproduce(recommendedAnime, 5);
+
   return (
     <main className="container">
-        <Group title="Anime">
-          <Header title="Paling Populer" linkHref="/populer" />
-          <AnimeList api={topAnime} titleOnly={false}/>
-        </Group>
+      <Group title="Anime">
+        <section className="flex flex-col gap-4 md:gap-5">
+          <Header title="Top Anime" linkHref="/populer" />
+          <AnimeList api={topAnime} titleOnly={false} />
+        </section>
+
+        <section className="flex flex-col gap-4 md:gap-5">
+          <Header title="Recommendation" />
+          <AnimeList api={recommendedAnime} />
+        </section>
+      </Group>
     </main>
   );
 };

@@ -1,4 +1,4 @@
-import { getAnimeResponse } from "@/app/libs/api-libs";
+import { getAnimeResponse } from "@/libs/api-libs";
 import Group from "@/components/Group";
 import VideoPlayer from "@/components/Utilities/VideoPalyer";
 import Image from "next/image";
@@ -7,8 +7,6 @@ import Character from "./Character";
 
 const Page = async ({ params: { id } }) => {
   const anime = await getAnimeResponse(`anime/${id}`);
-
-  console.log();
 
   return (
     <main className="container flex flex-col gap-14">

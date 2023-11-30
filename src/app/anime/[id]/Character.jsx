@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAnimeResponse } from "@/app/libs/api-libs";
+import { getAnimeResponse } from "@/libs/api-libs";
 import { CaretDown, CaretUp } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Group from "@/components/Group";
