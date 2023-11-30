@@ -18,7 +18,7 @@ const Page = async () => {
 
   return (
     <main className="container">
-      <Group title="Anime">
+      <Group title="Anime" className="md:gap-10">
         <section className="flex flex-col gap-4 md:gap-5">
           <Header title="Top Anime" linkHref="/populer" />
           <AnimeList api={topAnime} titleOnly={false} />
