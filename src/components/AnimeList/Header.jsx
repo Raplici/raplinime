@@ -9,7 +9,7 @@ const Header = ({ title, linkHref }) => {
       </p>
       {linkHref ? (
         <Link
-          href="/populer"
+          href={linkHref}
           className=" text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg md:p-3"
         >
           <ArrowRight size={20} />
