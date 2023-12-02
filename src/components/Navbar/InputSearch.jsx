@@ -20,15 +20,18 @@ const InputSearch = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative flex-1 w-full rounded-lg md:flex-initial md:w-1/3 md:rounded-3xl">
       <input
         ref={searchRef}
         placeholder="search.."
-        className="w-full p-2 rounded"
+        className="w-full p-2 rounded-lg md:rounded-3xl"
         onKeyDown={handleSearch}
       />
-      <button onClick={handleSearch} className="absolute top-2 end-2 text-Black-8">
-        <MagnifyingGlass size={24} className="invisible md:visible" />
+      <button
+        onClick={handleSearch}
+        className="absolute top-2 end-2 text-Black-8"
+      >
+        <MagnifyingGlass size={24} />
       </button>
     </div>
   );

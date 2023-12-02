@@ -1,6 +1,4 @@
-"use client";
-
-import { FileSearch } from "@phosphor-icons/react";
+import { FileSearch } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 const Page = () => {

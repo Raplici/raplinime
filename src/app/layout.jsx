@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} bg-Black-8 px-5 py-5 md:py-12`}
+        className={`${manrope.className} bg-Black-8 px-5 py-2.5 md:py-12`}
         suppressHydrationWarning={true}
       >
         <Navbar />
