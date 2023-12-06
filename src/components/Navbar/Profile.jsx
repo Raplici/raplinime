@@ -40,7 +40,7 @@ const Profile = ({ imgSrc }) => {
         width={40}
         height={40}
         onClick={onToggleMenu}
-        className="aspect-square h-10 w-10 shrink-0 object-cover object-center rounded-lg md:rounded-full"
+        className="aspect-square h-10 w-10 shrink-0 object-cover object-center rounded-lg cursor-pointer md:rounded-full"
       />
 
       {isDropdownVisible && (
