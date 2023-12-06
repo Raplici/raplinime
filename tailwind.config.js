@@ -77,7 +77,7 @@ module.exports = {
     container: {
       center: true,
       screens: {
-        md: "100rem",
+        md: "110rem",
       },
     },
   },
