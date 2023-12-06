@@ -6,6 +6,7 @@ import {
   reproduce,
 } from "@/libs/api-libs";
 import Group from "@/components/Group";
+import Banner from "@/components/Banner";
 
 const Page = async () => {
   const topAnime = await getAnimeResponse("top/anime", "limit=10");
@@ -18,6 +19,7 @@ const Page = async () => {
 
   return (
     <main className="container">
+      <Banner/>
       <Group title="Anime" className="md:gap-10">
         <section className="flex flex-col gap-4 md:gap-5">
           <Header title="Top Anime" linkHref="/populer" />

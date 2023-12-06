@@ -46,7 +46,7 @@ const Profile = ({ imgSrc }) => {
       {isDropdownVisible && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 z-10 mt-3 w-44 origin-top-right rounded-md border border-Black-15 bg-Black-10"
+          className="absolute right-0 z-50 mt-3 w-44 origin-top-right rounded-md border border-Black-15 bg-Black-10"
         >
           <div className="py-1">
             <Link

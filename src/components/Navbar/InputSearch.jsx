@@ -24,12 +24,12 @@ const InputSearch = () => {
       <input
         ref={searchRef}
         placeholder="search.."
-        className="w-full p-2 rounded-lg md:rounded-3xl"
+        className="w-full p-2 rounded-lg md:rounded-3xl bg-Absolute-White"
         onKeyDown={handleSearch}
       />
       <button
         onClick={handleSearch}
-        className="absolute top-2 end-2 text-Black-8"
+        className="absolute top-2 end-2 pl-1 text-Black-8 bg-Absolute-White"
       >
         <MagnifyingGlass size={24} />
       </button>
