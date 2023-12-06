@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { getAnimeResponse } from "@/libs/api-libs";
 import Link from "next/link";
 
-import Image from "next/image";
 import imageFrieren from "@public/images/Frieren.jpg";
 import imageJijitsu from "@public/images/JJK.png";
 import imageYourName from "@public/images/your_name.png";
@@ -73,16 +72,28 @@ const Banner = () => {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (currentIndex === slides.length - 1) {
+        setCurrentIndex(0);
+      } else {
+        setCurrentIndex(currentIndex + 1);
+      }
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [currentIndex]);
+
   return (
     <div className="relative flex mb-20">
-      <Image
-        src={`${slides[currentIndex].url}`}
-        alt=""
-        loading="eager"
-        width={1980}
-        height={50}
-        className="object-cover h-[360px] rounded-t-2xl md:h-[680px] "
-      />
+      <div className="w-full relative">
+        <div
+          style={{
+            backgroundImage: `url(${slides[currentIndex].url})`,
+          }}
+          className=" bg-cover bg-center h-[360px] rounded-t-2xl md:h-[680px] duration-500"
+        />
+      </div>
 
       <button
         onClick={prevSlide}
