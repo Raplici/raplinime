@@ -85,7 +85,7 @@ const Banner = () => {
   }, [currentIndex]);
 
   return (
-    <div className="relative flex mb-20">
+    <div className="relative flex">
       <div className="w-full relative">
         <div
           style={{
@@ -133,9 +133,9 @@ const Banner = () => {
                   ) : animeData.rating == "R - 17+ (violence & profanity)" ? (
                     <p>R17+</p>
                   ) : animeData.rating == "R+ - Mild Nudity" ? (
-                    <p>R+</p>
+                    <p>R</p>
                   ) : animeData.rating == "Rx - Hentai" ? (
-                    <p>Rx</p>
+                    <p>RX</p>
                   ) : null}
                 </div>
               )}

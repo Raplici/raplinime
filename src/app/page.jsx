@@ -5,32 +5,86 @@ import {
   getNestedAnimeResponse,
   reproduce,
 } from "@/libs/api-libs";
-import Group from "@/components/Group";
 import Banner from "@/components/Banner";
 
 const Page = async () => {
-  const topAnime = await getAnimeResponse("top/anime", "limit=10");
+  // Schedules
+  const getDay = () => {
+    var date = new Date();
+    let day = date.toString().slice(0, 3);
 
+    switch (day) {
+      case "Sun":
+        day = "sunday";
+        return day;
+
+      case "Mon":
+        day = "monday";
+        return day;
+
+      case "Tue":
+        day = "tuesday";
+        return day;
+
+      case "Wed":
+        day = "wednesday";
+        return day;
+
+      case "Thu":
+        day = "thursday";
+        return day;
+
+      case "Fri":
+        day = "friday";
+        return day;
+
+      case "Sat":
+        day = "saturday";
+        return day;
+    }
+  };
+
+  const schedules = await getAnimeResponse(
+    "schedules",
+    `filter=${getDay()}&sfw=true`
+  );
+  ////
+
+  // Top Anime
   let recommendedAnime = await getNestedAnimeResponse(
     "recommendations/anime",
     "entry"
   );
-  recommendedAnime = reproduce(recommendedAnime, 5);
+  recommendedAnime = reproduce(recommendedAnime, 7);
+  ////
+
+  const topAnime = await getAnimeResponse("top/anime", "sfw&limit=21");
 
   return (
-    <main className="container">
-      <Banner/>
-      <Group title="Anime" className="md:gap-10">
-        <section className="flex flex-col gap-4 md:gap-5">
-          <Header title="Top Anime" linkHref="/populer" />
-          <AnimeList api={topAnime} titleOnly={false} />
-        </section>
+    <main className="container flex flex-col gap-14">
+      <Banner />
 
-        <section className="flex flex-col gap-4 md:gap-5">
-          <Header title="Recommendation" />
-          <AnimeList api={recommendedAnime} />
+      <section className="flex flex-col gap-7 xl:flex-row">
+        <div className="flex flex-col gap-7">
+          <section className="flex flex-col">
+            <Header title="TOP ANIME" link="/populer" />
+
+            <AnimeList api={topAnime} />
+          </section>
+
+          <section className="flex flex-col">
+            <Header title="RECOMMENDATION" />
+
+            <AnimeList api={recommendedAnime} />
+          </section>
+        </div>
+
+        <section className="flex flex-col">
+          <Header title="AIRING TODAY" />
+
+          <AnimeList horizontal api={schedules} />
         </section>
-      </Group>
+      </section>
     </main>
   );
 };
