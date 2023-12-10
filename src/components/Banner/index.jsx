@@ -50,7 +50,32 @@ const Banner = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animeData, setAnimeData] = useState([]);
-  let id = slides[currentIndex].id;
+  const [id, setId] = useState(() => slides[currentIndex].id);
+
+  useEffect(() => {
+    setId(slides[currentIndex].id);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAnimeResponse(`anime/${id}`);
+      setAnimeData(data.data);
+    };
+    fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        if (prevIndex === slides.length - 1) {
+          return 0;
+        }
+        return prevIndex + 1;
+      });
+    }, 7000);
+
+    return () => clearInterval(intervalId);
+  }, [id]);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -63,26 +88,6 @@ const Banner = () => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAnimeResponse(`anime/${id}`);
-      setAnimeData(data.data);
-    };
-    fetchData();
-  }, [id]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (currentIndex === slides.length - 1) {
-        setCurrentIndex(0);
-      } else {
-        setCurrentIndex(currentIndex + 1);
-      }
-    }, 5000);
-
-    return () => clearInterval(intervalId);
-  }, [currentIndex]);
 
   return (
     <div className="relative flex">
