@@ -1,104 +1,137 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getAnimeResponse } from "@/libs/api-libs";
-import { CaretDown, CaretUp } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
-import Group from "@/components/Group";
+import { useState, useEffect, useMemo } from "react";
+import { getAnimeResponse } from "@/libs/api-libs";
+import { XCircle } from "@phosphor-icons/react";
+import Header from "@/components/AnimeList/Header";
 
-const Character = ({ id }) => {
-  const [characters, setCharacters] = useState([]);
-  const [showMore, setShowMore] = useState(false);
-  const [sliceCount, setSliceCount] = useState(4);
+const Character = ({ data }) => {
+  const [characterId, setCharacterId] = useState(null);
+  const [isCharacterDetailsVisible, setCharacterDetailsVisible] =
+    useState(false);
+  const [details, setDetails] = useState({
+    images: {
+      webp: {
+        image_url:
+          "https://cdn.myanimelist.net/images/characters/7/525105.webp",
+      },
+    },
+  });
+
+  const character = useMemo(
+    () => data.filter((char) => char.role == "Main"),
+    [data]
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAnimeResponse(`anime/${id}/characters`);
-      setCharacters(data);
-    };
+    if (characterId) {
+      getAnimeResponse(`characters/${characterId}`).then((data) => {
+        setDetails(data.data);
+        setTimeout(() => setCharacterDetailsVisible(true), 200);
+      });
+    } else {
+      //close modal
+      setCharacterDetailsVisible(false);
+    }
+  }, [characterId]);
 
-    fetchData();
-
-    const handleWindowSizeChange = () => {
-      if (window.innerWidth >= 1280) {
-        setSliceCount(8);
-      } else if (window.innerWidth >= 768) {
-        setSliceCount(6);
-      } else {
-        setSliceCount(4);
-      }
-    };
-
-    handleWindowSizeChange();
-    window.addEventListener("resize", handleWindowSizeChange);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, [id]);
-
-  const handlerOnClick = () => {
-    setShowMore(!showMore);
-  };
+  function decodedText(text) {
+    return text?.replaceAll(/&[a-zA-Z0-9;]+;/g, "");
+  }
 
   return (
-    <Group className="bg-Black-10 gap-2.5 md:gap-3.5">
-      <div className="flex justify-between items-center">
-        <p className="text-Grey-60">Characters</p>
-        <button
-          onClick={handlerOnClick}
-          className=" text-Absolute-White p-1.5 border border-Black-15 bg-Black-8 rounded-full md:p-3.5"
-        >
-          {showMore == false ? <CaretDown size={18} /> : <CaretUp size={18} />}
-        </button>
-      </div>
+    <>
+      {character.length > 0 && (
+        <section>
+          <Header title="MAIN CHARACTER" />
 
-      {showMore == false ? (
-        <div className="flex gap-5">
-          {characters.data?.slice(0, sliceCount).map((char, index) => {
-            return (
-              <div key={index} className="flex flex-col gap-2">
-                <Image
-                  src={char.character.images.webp.image_url}
-                  alt={char.character.images.jpg.image_url}
-                  width={350}
-                  height={350}
-                  className="object-cover aspect-square object-center rounded-xl"
-                />
-                <div>
-                  <p className="text-xs text-Grey-60 md:text-base">
-                    {char.role}
-                  </p>
-                  <p className="text-xs md:text-base">{char.character.name}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-5">
-          {characters.data?.map((char, index) => {
-            return (
-              <div key={index} className="flex flex-col gap-2">
-                <Image
-                  src={char.character.images.webp.image_url}
-                  alt={char.character.images.jpg.image_url}
-                  width={350}
-                  height={350}
-                  className="object-cover aspect-square object-center rounded-xl"
-                />
-                <div>
-                  <p className="text-xs text-Grey-60 md:text-base">
-                    {char.role}
-                  </p>
-                  <p className="text-xs md:text-base">{char.character.name}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          <div className="flex flex-wrap gap-3 text-Absolute-White">
+            {character.map((char, index) => {
+              return (
+                <section
+                  key={index}
+                  onClick={() => setCharacterId(char.character.mal_id)}
+                  className="flex flex-row w-full md:w-80 cursor-pointer bg-Black-10 rounded-lg text-Absolute-White items-center transition hover:bg-gradient-to-r from-transparent to-Red-60"
+                >
+                  <div className="w-auto h-auto">
+                    <Image
+                      src={char.character.images.webp.image_url}
+                      alt={char.character.images.webp.image_url}
+                      width={64}
+                      height={100}
+                      className="object-cover object-center rounded-l-lg aspect-[3/4] w-auto h-auto"
+                    />
+                  </div>
+
+                  <section className="w-full px-5">
+                    <p className="font-medium md:text-lg line-clamp-1">
+                      {char.character.name}
+                    </p>
+                  </section>
+                </section>
+              );
+            })}
+
+            {/* modal details */}
+            {/* backdrop */}
+            <div
+              onClick={() => setCharacterId(null)}
+              className={`fixed z-10 inset-0 flex justify-center items-center transition-colors ${
+                isCharacterDetailsVisible
+                  ? "bg-Absolute-Black bg-opacity-75 visible"
+                  : "invisible"
+              }`}
+            >
+              {/* modal */}
+              <section
+                onClick={(e) => e.stopPropagation()}
+                className={`overscroll-contain bg-Black-10 max-w-[90%] md:max-w-[80%] max-h-[86%] overflow-auto rounded-xl shadow p-5 transition-all duration-500 ${
+                  isCharacterDetailsVisible
+                    ? "scale-100 opacity-100"
+                    : "scale-50 opacity-0"
+                }`}
+              >
+                {/* x button */}
+
+                <button
+                  onClick={() => setCharacterId(null)}
+                  className="absolute top-3 right-3 text-Absolute-White"
+                >
+                  <XCircle size={20} weight="fill" />
+                </button>
+
+                {/* character details */}
+
+                <article className="flex flex-col gap-7 rounded-lg md:flex-row ">
+                  <div className="w-auto h-auto">
+                    <Image
+                      src={details.images?.webp.image_url}
+                      alt={details.images?.webp.image_url}
+                      width={384}
+                      height={542}
+                      className="object-cover object-center rounded-lg aspect-[3/4] w-full md:w-80"
+                    />
+                  </div>
+
+                  <section className="flex flex-col gap-1.5 w-full text-base leading-7">
+                    <p className="font-bold text-center text-2xl md:text-start md:text-4xl">
+                      {details?.name}
+                    </p>
+
+                    <hr className="w-full border-t border-Absolute-White" />
+
+                    <p className="whitespace-pre-line">
+                      {decodedText(details?.about)}
+                    </p>
+                  </section>
+                </article>
+              </section>
+            </div>
+          </div>
+        </section>
       )}
-    </Group>
+    </>
   );
 };
 
