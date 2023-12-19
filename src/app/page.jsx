@@ -8,49 +8,21 @@ import {
 import Banner from "@/components/Banner";
 
 const Page = async () => {
-  // Schedules
-  const getDay = () => {
-    var date = new Date();
-    let day = date.toString().slice(0, 3);
+  // get schedules
+  const date = new Date();
 
-    switch (day) {
-      case "Sun":
-        day = "sunday";
-        return day;
-
-      case "Mon":
-        day = "monday";
-        return day;
-
-      case "Tue":
-        day = "tuesday";
-        return day;
-
-      case "Wed":
-        day = "wednesday";
-        return day;
-
-      case "Thu":
-        day = "thursday";
-        return day;
-
-      case "Fri":
-        day = "friday";
-        return day;
-
-      case "Sat":
-        day = "saturday";
-        return day;
-    }
-  };
+  // Passing undefined as the first argument indicates the browser should use the default locale settings.
+  // weekday: This key specifies that we want to format only the weekday.
+  // "long": This value indicates we want the full name of the day (example: "Wednesday" instead of "Wed").
+  const fullDay = date.toLocaleDateString(undefined, { weekday: "long" });
 
   const schedules = await getAnimeResponse(
     "schedules",
-    `filter=${getDay()}&sfw=true`
+    `filter=${fullDay}&sfw=true`
   );
   ////
 
-  // Top Anime
+  // get recommendation
   let recommendedAnime = await getNestedAnimeResponse(
     "recommendations/anime",
     "entry"
@@ -58,7 +30,9 @@ const Page = async () => {
   recommendedAnime = reproduce(recommendedAnime, 7);
   ////
 
+  // get top anime
   const topAnime = await getAnimeResponse("top/anime", "sfw&limit=21");
+  ////
 
   return (
     <main className="container flex flex-col gap-14">
