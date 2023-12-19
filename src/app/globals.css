@@ -28,6 +28,23 @@ img {
     animation: s3 0.5s infinite linear;
 }
 
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-Black-8;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-Red-60/70;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-Red-60;
+}
+
+
 @keyframes s3 {
     to {
         transform: rotate(1turn)
