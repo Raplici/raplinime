@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Page = async () => {
   const user = await authUserSession();
-  console.log(user);
+  // console.log(user);
   return (
     <div className="text-color-primary">
         <h3>DASHBOARD</h3>
