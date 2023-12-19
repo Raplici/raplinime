@@ -50,7 +50,7 @@ const Profile = ({ imgSrc }) => {
         >
           <div className="py-1">
             <Link
-              href="users/dashboard"
+              href="/users/dashboard"
               className="block px-4 py-2 text-sm hover:bg-Black-20"
             >
               Dashboard
