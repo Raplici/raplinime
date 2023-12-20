@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { getAnimeResponse } from "@/libs/api-libs";
 import Link from "next/link";
 
-import imageFrieren from "@public/images/Frieren.jpg";
-import imageJijitsu from "@public/images/JJK.png";
-import imageYourName from "@public/images/your_name.png";
-import imageReZero from "@public/images/ReZero.png";
+import imageFrieren from "@public/images/Frieren.webp";
+import imageJijitsu from "@public/images/JJK.webp";
+import imageYourName from "@public/images/your_name.webp";
+import imageReZero from "@public/images/ReZero.webp";
 import {
   CaretRight,
   CaretLeft,
