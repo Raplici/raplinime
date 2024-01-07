@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Play } from "@phosphor-icons/react/dist/ssr";
+import { Play } from "@phosphor-icons/react/dist/ssr";
 
 const Header = ({ title, link }) => {
   return (
@@ -9,7 +9,7 @@ const Header = ({ title, link }) => {
           <Play size={20} weight="fill" />
         </div>
 
-        <p className="text-Absolute-White font-bold text-lg leading-6 md:text-2xl md:leading-8">
+        <p className="text-Absolute-White font-bold text-xl leading-6 md:text-2xl md:leading-8">
           {title}
         </p>
       </div>
@@ -17,7 +17,7 @@ const Header = ({ title, link }) => {
       {link && (
         <Link
           href={link}
-          className="group text-Absolute-White py-1.5 px-3 border-2 border-Black-12 rounded-3xl transition hover:bg-Red-60 hover:border-Red-60 "
+          className="group py-1 px-3 rounded-3xl border-2 border-Black-12 text-Absolute-White transition-colors hover:bg-Black-15 hover:border-Black-15 "
         >
           <p className="group-hover:text-Absolute-White text-sm text-Grey-60">
             see more

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAnimeResponse } from "@/libs/api-libs";
 import Link from "next/link";
+import useSWR from "swr";
 
 import imageFrieren from "@public/images/Frieren.webp";
 import imageJijitsu from "@public/images/JJK.webp";
@@ -15,6 +15,8 @@ import {
   BookmarkSimple,
   Circle,
 } from "@phosphor-icons/react";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Banner = () => {
   const slides = [
@@ -49,20 +51,16 @@ const Banner = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [animeData, setAnimeData] = useState([]);
   const [id, setId] = useState(() => slides[currentIndex].id);
+
+  const { data: anime } = useSWR(
+    id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/anime/${id}` : null,
+    fetcher
+  );
 
   useEffect(() => {
     setId(slides[currentIndex].id);
   }, [currentIndex]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAnimeResponse(`anime/${id}`);
-      setAnimeData(data.data);
-    };
-    fetchData();
-  }, [id]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -120,34 +118,34 @@ const Banner = () => {
             <p className="text-lg font-bold md:text-3xl">{`${slides[currentIndex].title}`}</p>
 
             <section className="flex flex-wrap gap-2 text-xs justify-start md:text-sm">
-              {animeData?.score && (
+              {anime?.data.score && (
                 <div className="flex items-center border border-Absolute-White rounded-3xl px-2 py-1">
                   <Star size={14} className="mr-1" />
-                  <p>{animeData?.score}</p>
+                  <p>{anime?.data.score}</p>
                 </div>
               )}
 
-              {animeData?.rating && (
+              {anime?.data.rating && (
                 <div className="flex border w-fit border-Absolute-White rounded-3xl px-2 py-1 text-xs text-center items-center">
-                  {animeData.rating == "G - All Ages" ? (
+                  {anime.data.rating == "G - All Ages" ? (
                     <p>G</p>
-                  ) : animeData.rating == "PG - Children" ? (
+                  ) : anime.data.rating == "PG - Children" ? (
                     <p>PG</p>
-                  ) : animeData.rating == "PG-13 - Teens 13 or older" ? (
+                  ) : anime.data.rating == "PG-13 - Teens 13 or older" ? (
                     <p>PG-13</p>
-                  ) : animeData.rating == "R - 17+ (violence & profanity)" ? (
+                  ) : anime.data.rating == "R - 17+ (violence & profanity)" ? (
                     <p>R17+</p>
-                  ) : animeData.rating == "R+ - Mild Nudity" ? (
+                  ) : anime.data.rating == "R+ - Mild Nudity" ? (
                     <p>R</p>
-                  ) : animeData.rating == "Rx - Hentai" ? (
+                  ) : anime.data.rating == "Rx - Hentai" ? (
                     <p>RX</p>
                   ) : null}
                 </div>
               )}
 
-              {animeData?.genres && animeData.genres.length > 0 && (
+              {anime?.data.genres && anime.data.genres.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {animeData.genres.map((genres, index) => {
+                  {anime.data.genres.map((genres, index) => {
                     return (
                       <p
                         key={index}
@@ -171,14 +169,14 @@ const Banner = () => {
             >
               Read more
             </Link>
-
+{/* 
             <Link
               href="#"
               className="flex flex-nowrap items-center gap-1 rounded-lg leading-5 md:leading-7 text-sm md:text-lg md:font-medium text-Absolute-White  px-2 md:px-6 py-1 md:py-2.5 hover:bg-Absolute-White hover:text-Black-8 transition-all "
             >
               <BookmarkSimple size={20} />
               Add to Collections
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>

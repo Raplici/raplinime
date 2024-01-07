@@ -1,40 +1,42 @@
 "use client";
 
+import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useState, useEffect, useMemo } from "react";
-import { getAnimeResponse } from "@/libs/api-libs";
+import useSWR from "swr";
 import { XCircle } from "@phosphor-icons/react";
 import Header from "@/components/AnimeList/Header";
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const Character = ({ data }) => {
-  const [characterId, setCharacterId] = useState(null);
-  const [isCharacterDetailsVisible, setCharacterDetailsVisible] =
-    useState(false);
-  const [details, setDetails] = useState({
-    images: {
-      webp: {
-        image_url:
-          "https://cdn.myanimelist.net/images/characters/7/525105.webp",
-      },
-    },
-  });
+  const router = useRouter();
+  if (!data) {
+    return setTimeout(() => {
+      router.refresh();
+    }, 2000);
+  }
 
   const character = useMemo(
     () => data.filter((char) => char.role == "Main"),
     [data]
   );
 
-  useEffect(() => {
-    if (characterId) {
-      getAnimeResponse(`characters/${characterId}`).then((data) => {
-        setDetails(data.data);
-        setTimeout(() => setCharacterDetailsVisible(true), 200);
-      });
-    } else {
-      //close modal
-      setCharacterDetailsVisible(false);
-    }
-  }, [characterId]);
+  const [characterId, setCharacterId] = useState(null);
+  const [isCharacterDetailsVisible, setCharacterDetailsVisible] =
+    useState(false);
+
+  const { data: details } = useSWR(
+    characterId
+      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/characters/${characterId}`
+      : null,
+    fetcher
+  );
+
+  function handleOpenModal(id) {
+    setCharacterId(id);
+    setTimeout(() => setCharacterDetailsVisible(true), 400);
+  }
 
   function decodedText(text) {
     return text?.replaceAll(/&[a-zA-Z0-9;]+;/g, "");
@@ -46,13 +48,13 @@ const Character = ({ data }) => {
         <section>
           <Header title="MAIN CHARACTER" />
 
-          <div className="flex flex-wrap gap-3 text-Absolute-White">
+          <div className="w-full gap-3 grid md:grid-cols-3 2xl:grid-cols-4 text-Absolute-White">
             {character.map((char, index) => {
               return (
                 <section
                   key={index}
-                  onClick={() => setCharacterId(char.character.mal_id)}
-                  className="flex flex-row w-full md:w-80 cursor-pointer bg-Black-10 rounded-lg text-Absolute-White items-center transition hover:bg-gradient-to-r from-transparent to-Red-60"
+                  onClick={() => handleOpenModal(char.character.mal_id)}
+                  className="flex flex-row w-full cursor-pointer bg-Black-10 rounded-lg text-Absolute-White items-center transition-colors hover:bg-gradient-to-r from-transparent to-Red-60"
                 >
                   <div className="w-auto h-auto">
                     <Image
@@ -76,7 +78,7 @@ const Character = ({ data }) => {
             {/* modal details */}
             {/* backdrop */}
             <div
-              onClick={() => setCharacterId(null)}
+              onClick={() => setCharacterDetailsVisible(false)}
               className={`fixed z-10 inset-0 flex justify-center items-center transition-colors ${
                 isCharacterDetailsVisible
                   ? "bg-Absolute-Black bg-opacity-75 visible"
@@ -84,49 +86,51 @@ const Character = ({ data }) => {
               }`}
             >
               {/* modal */}
-              <section
-                onClick={(e) => e.stopPropagation()}
-                className={`overscroll-contain bg-Black-10 max-w-[90%] md:max-w-[80%] max-h-[86%] overflow-auto rounded-xl shadow p-5 transition-all duration-500 ${
-                  isCharacterDetailsVisible
-                    ? "scale-100 opacity-100"
-                    : "scale-50 opacity-0"
-                }`}
-              >
-                {/* x button */}
-
-                <button
-                  onClick={() => setCharacterId(null)}
-                  className="absolute top-3 right-3 text-Absolute-White"
+              {details != undefined && (
+                <section
+                  onClick={(e) => e.stopPropagation()}
+                  className={`overscroll-contain bg-Black-10 max-w-[90%] md:max-w-[80%] max-h-[86%] overflow-auto rounded-xl shadow p-5 transition-all duration-500 ${
+                    isCharacterDetailsVisible
+                      ? "scale-100 opacity-100"
+                      : "scale-50 opacity-0"
+                  }`}
                 >
-                  <XCircle size={20} weight="fill" />
-                </button>
+                  {/* x button */}
 
-                {/* character details */}
+                  <button
+                    onClick={() => setCharacterDetailsVisible(false)}
+                    className="absolute top-3 right-3 text-Absolute-White"
+                  >
+                    <XCircle size={20} weight="fill" />
+                  </button>
 
-                <article className="flex flex-col gap-7 rounded-lg md:flex-row ">
-                  <div className="w-auto h-auto">
-                    <Image
-                      src={details.images?.webp.image_url}
-                      alt={details.images?.webp.image_url}
-                      width={384}
-                      height={542}
-                      className="object-cover object-center rounded-lg aspect-[3/4] w-full md:w-80"
-                    />
-                  </div>
+                  {/* character details */}
 
-                  <section className="flex flex-col gap-1.5 w-full text-base leading-7">
-                    <p className="font-bold text-center text-2xl md:text-start md:text-4xl">
-                      {details?.name}
-                    </p>
+                  <article className="flex flex-col gap-7 rounded-lg md:flex-row ">
+                    <div className="w-auto h-auto">
+                      <Image
+                        src={details?.data.images?.webp.image_url}
+                        alt={details?.data.images?.webp.image_url}
+                        width={384}
+                        height={542}
+                        className="object-cover object-center rounded-lg aspect-[3/4] w-full md:w-80"
+                      />
+                    </div>
 
-                    <hr className="w-full border-t border-Absolute-White" />
+                    <section className="flex flex-col gap-1.5 w-full text-base leading-7">
+                      <p className="font-bold text-center text-2xl md:text-start md:text-4xl">
+                        {details?.data.name}
+                      </p>
 
-                    <p className="whitespace-pre-line">
-                      {decodedText(details?.about)}
-                    </p>
-                  </section>
-                </article>
-              </section>
+                      <hr className="w-full border-t border-Absolute-White" />
+
+                      <p className="whitespace-pre-line">
+                        {decodedText(details?.data.about)}
+                      </p>
+                    </section>
+                  </article>
+                </section>
+              )}
             </div>
           </div>
         </section>

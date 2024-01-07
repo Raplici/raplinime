@@ -2,6 +2,9 @@ import "@/app//globals.css";
 import { Manrope } from "next/font/google";
 import Navbar from "@/components/Navbar";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const manrope = Manrope({
   preload: true,
   adjustFontFallback: true,
@@ -26,6 +29,19 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         {children}
+
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </body>
     </html>
   );

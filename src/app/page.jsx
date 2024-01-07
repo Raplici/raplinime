@@ -10,12 +10,7 @@ import Banner from "@/components/Banner";
 const Page = async () => {
   // get schedules
   const date = new Date();
-
-  // Passing undefined as the first argument indicates the browser should use the default locale settings.
-  // weekday: This key specifies that we want to format only the weekday.
-  // "long": This value indicates we want the full name of the day (example: "Wednesday" instead of "Wed").
-  const fullDay = date.toLocaleDateString(undefined, { weekday: "long" });
-
+  const fullDay = date.toLocaleDateString("en-US", { weekday: "long" });
   const schedules = await getAnimeResponse(
     "schedules",
     `filter=${fullDay}&sfw=true`
@@ -53,11 +48,13 @@ const Page = async () => {
           </section>
         </div>
 
-        <section className="flex flex-col">
-          <Header title="AIRING TODAY" />
+        {schedules.data?.length > 0 && (
+          <section className="flex flex-col">
+            <Header title="AIRING TODAY" />
 
-          <AnimeList horizontal api={schedules} />
-        </section>
+            <AnimeList horizontal api={schedules} className="xl:w-80" />
+          </section>
+        )}
       </section>
     </main>
   );

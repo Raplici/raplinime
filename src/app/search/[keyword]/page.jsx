@@ -1,7 +1,6 @@
 import { getAnimeResponse } from "@/libs/api-libs";
 import AnimeList from "@/components/AnimeList";
 import Header from "@/components/AnimeList/Header";
-import Group from "@/components/Group";
 
 const Page = async ({ params }) => {
   const { keyword } = params;
@@ -10,10 +9,16 @@ const Page = async ({ params }) => {
 
   return (
     <section className="container">
-      <Group>
-      <Header title={`Pencarian untuk ${decodedKeyword}...`} />
-      <AnimeList api={searchAnime} />
-      </Group>
+      <Header title={`SEARCH RESULTS FOR '${decodedKeyword}...' `} />
+      {searchAnime.data?.length > 0 ? (
+        <AnimeList api={searchAnime} />
+      ) : (
+        <div className="flex justify-center items-center h-40 text-Grey-60">
+          <p className="flex justify-center items-center ">
+            Anime with keyword '{decodedKeyword}' not found...
+          </p>
+        </div>
+      )}
     </section>
   );
 };
