@@ -259,7 +259,7 @@ const Page = async ({ params: { id } }) => {
         {suggestion.data?.length > 0 && (
           <section className="flex flex-col">
             <Header title="RECOMMENDED" />
-            <AnimeList horizontal api={suggestion} className="md:w-80" />
+            <AnimeList horizontal api={suggestion} className="md:w-80"/>
           </section>
         )}
       </section>
