@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import AnimeList from "@/components/AnimeList";
 import Header from "@/components/AnimeList/Header";
@@ -23,16 +23,25 @@ const ButtonItem = ({ value, active, onClick }) => {
     </button>
   );
 };
- 
+
 const Page = () => {
   const [page, setPage] = useState(1);
   const [activeItem, setActiveItem] = useState("All");
   const [typeQuery, setTypeQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const { data } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?page=${page}${typeQuery}`,
     fetcher
   );
+
+  useEffect(() => {
+    if (data === undefined) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [data]);
 
   const handleButtonType = (value) => {
     setActiveItem(value);
@@ -92,7 +101,32 @@ const Page = () => {
         </div>
       </div>
 
-      <AnimeList horizontal api={data} score type />
+      {loading ? (
+        Array(25)
+          .fill(0)
+          .map((d, i) => (
+            <section
+              key={i}
+              className="flex flex-row mb-3 animate-pulse bg-Black-10 rounded-lg items-center "
+            >
+              <div className="w-auto h-auto">
+                <div className="w-14 h-16 md:w-16 md:h-20 bg-Black-20 rounded-l-lg" />
+              </div>
+
+              <section className="flex flex-col gap-3 px-5 w-full">
+                <div className="flex gap-3">
+                  <div className="w-10 h-3 bg-Black-20 rounded-3xl" />
+                  <div className="w-10 h-3 bg-Black-20 rounded-3xl" />
+                  <div className="w-10 h-3 bg-Black-20 rounded-3xl" />
+                </div>
+
+                <div className="w-44 sm:w-80 h-3 bg-Black-20 rounded-3xl" />
+              </section>
+            </section>
+          ))
+      ) : (
+        <AnimeList horizontal api={data} score type />
+      )}
 
       <Pagination
         page={page}
