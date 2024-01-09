@@ -7,10 +7,11 @@ import {
 } from "@/libs/api-libs";
 import Banner from "@/components/Banner";
 
+const date = new Date();
+const fullDay = date.toLocaleDateString("en-US", { weekday: "long" });
+
 const Page = async () => {
   // get schedules
-  const date = new Date();
-  const fullDay = date.toLocaleDateString("en-US", { weekday: "long" });
   const schedules = await getAnimeResponse(
     "schedules",
     `filter=${fullDay}&sfw=true`
