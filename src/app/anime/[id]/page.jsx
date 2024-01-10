@@ -201,7 +201,7 @@ const Page = async ({ params: { id } }) => {
                         </div>
                       )}
 
-                      {anime.data?.genres && anime.data.genres.length > 0 && (
+                      {anime.data?.genres && anime.data?.genres.length > 0 && (
                         <div className="w-full flex gap-4">
                           <p className="w-1/6">Genre:</p>
 
@@ -252,7 +252,7 @@ const Page = async ({ params: { id } }) => {
             </section>
           )}
 
-          {characters.data?.length > 0 && <Character data={characters.data} />}
+          <Character data={characters.data} />
 
           <section className="flex flex-col">
             <Header title="COMMENT" />
