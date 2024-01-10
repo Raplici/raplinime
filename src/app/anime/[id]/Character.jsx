@@ -124,6 +124,16 @@ const Character = ({ data }) => {
 
                       <hr className="w-full border-t border-Absolute-White" />
 
+                      {details?.data.about ? (
+                        <p className="whitespace-pre-line">
+                          {decodedText(details?.data.about)}
+                        </p>
+                      ) : (
+                        <p className="flex text-Grey-60">
+                          There is no information about this character yet...
+                        </p>
+                      )}
+
                       <p className="whitespace-pre-line">
                         {decodedText(details?.data.about)}
                       </p>
