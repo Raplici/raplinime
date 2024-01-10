@@ -26,7 +26,7 @@ const Pagination = ({ page, lastPage }) => {
   );
 
   return (
-    <div className="flex justify-center py-7 font-semibold text-lg text-color-primary">
+    <div className="flex justify-center pt-7 font-semibold text-lg text-color-primary">
       <div className="grid grid-cols-3 gap-3 items-center">
         {page <= 1 ? null : (
           <div className="flex gap-3">
