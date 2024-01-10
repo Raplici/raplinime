@@ -30,7 +30,7 @@ To run this project, you will need to add the following environment variables to
 1. Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/rafliferdian/animevibe.git
 ```
 
 2. add an .env file with the following environment variables
