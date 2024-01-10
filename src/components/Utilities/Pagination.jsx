@@ -1,37 +1,29 @@
+"use client";
+
+import { useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import {
   CaretDoubleLeft,
   CaretDoubleRight,
   CaretLeft,
   CaretRight,
-} from "@phosphor-icons/react/dist/ssr";
+} from "@phosphor-icons/react";
 
-const Pagination = ({ page, lastPage, setPage }) => {
-  const scrollTop = () => {
-    scrollTo({
-      behavior: "smooth",
-      top: 0,
-    });
-  };
+const Pagination = ({ page, lastPage }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const query = useSearchParams();
 
-  const handleNextPage = () => {
-    setPage((prevState) => prevState + 1);
-    scrollTop();
-  };
+  const selectedType = query.get("type") || "";
 
-  const handlePrevPage = () => {
-    setPage((prevState) => prevState - 1);
-    scrollTop();
-  };
-
-  const handleLastPage = () => {
-    setPage(lastPage);
-    scrollTop();
-  };
-
-  const handleFirstPage = () => {
-    setPage(1);
-    scrollTop();
-  };
+  const createQueryString = useCallback(
+    (queries) => {
+      const params = new URLSearchParams(queries);
+      return params.toString();
+    },
+    [query]
+  );
 
   return (
     <div className="flex justify-center py-7 font-semibold text-lg text-color-primary">
@@ -39,14 +31,48 @@ const Pagination = ({ page, lastPage, setPage }) => {
         {page <= 1 ? null : (
           <div className="flex gap-3">
             <button
-              onClick={handleFirstPage}
+              onClick={() => {
+                selectedType === ""
+                  ? router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: 1,
+                        })
+                    )
+                  : router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: 1,
+                          type: selectedType,
+                        })
+                    );
+              }}
               className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretDoubleLeft size={20} weight="duotone" />
             </button>
 
             <button
-              onClick={handlePrevPage}
+              onClick={() => {
+                selectedType === ""
+                  ? router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: parseInt(page) - 1,
+                        })
+                    )
+                  : router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: parseInt(page) - 1,
+                          type: selectedType,
+                        })
+                    );
+              }}
               className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretLeft size={20} weight="duotone" />
@@ -65,14 +91,48 @@ const Pagination = ({ page, lastPage, setPage }) => {
         {page >= lastPage ? null : (
           <div className="flex gap-3">
             <button
-              onClick={handleNextPage}
+              onClick={() => {
+                selectedType === ""
+                  ? router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: parseInt(page) + 1,
+                        })
+                    )
+                  : router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: parseInt(page) + 1,
+                          type: selectedType,
+                        })
+                    );
+              }}
               className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretRight size={20} weight="duotone" />
             </button>
 
             <button
-              onClick={handleLastPage}
+              onClick={() => {
+                selectedType === ""
+                  ? router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: lastPage,
+                        })
+                    )
+                  : router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: lastPage,
+                          type: selectedType,
+                        })
+                    );
+              }}
               className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretDoubleRight size={20} weight="duotone" />

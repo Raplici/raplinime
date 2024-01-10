@@ -1,40 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 import AnimeList from "@/components/AnimeList";
 import Header from "@/components/AnimeList/Header";
 import Pagination from "@/components/Utilities/Pagination";
-import useSWR from "swr";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-const ButtonItem = ({ value, active, onClick }) => {
-  return (
-    <button
-      className={`py-1 px-5 rounded-lg md:rounded-3xl text-center ${
-        active
-          ? "bg-Absolute-White text-Black-8"
-          : "border-2 border-Black-12 text-Absolute-White transition-colors hover:bg-Black-15 hover:border-Black-15"
-      }`}
-      onClick={() => onClick(value)}
-    >
-      {value}
-    </button>
-  );
-};
+const typeQuery = ["", "TV", "Movie", "OVA", "Special", "ONA", "Music"];
 
 const Page = () => {
-  const [page, setPage] = useState(1);
-  const [activeItem, setActiveItem] = useState("All");
-  const [typeQuery, setTypeQuery] = useState("");
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathname = usePathname();
+  const query = useSearchParams();
+  const params = new URLSearchParams(query);
 
+  const selectedType = query.get("type") || "";
+  const page = query.get("page") || 1;
+
+  const [loading, setLoading] = useState(false);
+
+  const createQueryString = useCallback(
+    (queries) => {
+      const params = new URLSearchParams(queries);
+      return params.toString();
+    },
+    [query]
+  );
+
+  const deleteQueryString = (query) => {
+    params.set("page", 1);
+    params.delete(query);
+    const newUrl = `${pathname}?${params.toString()}`;
+    router.replace(newUrl);
+  };
+
+  //fetch data
   const { data } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?page=${page}${typeQuery}`,
+    selectedType === ""
+      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?page=${page}`
+      : `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?page=${page}&type=${selectedType}`,
     fetcher
   );
 
+  //loading skeleton
   useEffect(() => {
     if (data === undefined) {
       setLoading(true);
@@ -43,60 +55,54 @@ const Page = () => {
     }
   }, [data]);
 
-  const handleButtonType = (value) => {
-    setActiveItem(value);
-
-    switch (value) {
-      case "TV":
-        setTypeQuery("&type=tv");
-        setPage(1);
-        break;
-
-      case "Movie":
-        setTypeQuery("&type=movie");
-        setPage(1);
-        break;
-
-      case "OVA":
-        setTypeQuery("&type=ova");
-        setPage(1);
-        break;
-
-      case "Special":
-        setTypeQuery("&type=special");
-        setPage(1);
-        break;
-
-      case "ONA":
-        setTypeQuery("&type=ona");
-        setPage(1);
-        break;
-
-      case "Music":
-        setTypeQuery("&type=music");
-        setPage(1);
-        break;
-
-      default:
-        setTypeQuery("");
-        setPage(1);
+  //validasi tipe dan halaman pada url
+  useEffect(() => {
+    if (!typeQuery.includes(selectedType)) {
+      deleteQueryString("type");
     }
-  };
 
-  const items = ["All", "TV", "Movie", "OVA", "Special", "ONA", "Music"];
+    if (parseInt(page) < 1) {
+      params.set("page", 1);
+      const newUrl = `${pathname}?${params.toString()}`;
+      router.replace(newUrl);
+    }
+
+    if (parseInt(page) > data?.pagination?.last_visible_page) {
+      params.set("page", data?.pagination?.last_visible_page);
+      const newUrl = `${pathname}?${params.toString()}`;
+      router.replace(newUrl);
+    }
+  }, [data]);
 
   return (
     <section className="container">
       <div className="flex flex-col md:items-center md:flex-row md:gap-10">
         <Header title={`TOP ANIME #${page}`} />
         <div className="flex gap-3 overflow-x-auto mb-3 items-center ">
-          {items.map((item) => (
-            <ButtonItem
-              key={item}
-              value={item}
-              active={activeItem === item}
-              onClick={handleButtonType}
-            />
+          {typeQuery.map((type, index) => (
+            <button
+              onClick={() => {
+                type === ""
+                  ? deleteQueryString("type")
+                  : router.push(
+                      pathname +
+                        "?" +
+                        createQueryString({
+                          page: 1,
+
+                          type: `${type}`,
+                        })
+                    );
+              }}
+              key={index}
+              className={`py-1 px-5 rounded-lg md:rounded-3xl text-center ${
+                selectedType == type
+                  ? "bg-Absolute-White text-Black-8"
+                  : "border-2 border-Black-12 text-Absolute-White transition-colors hover:bg-Black-15 hover:border-Black-15"
+              }`}
+            >
+              {type === "" ? "All" : type}
+            </button>
           ))}
         </div>
       </div>
@@ -128,11 +134,7 @@ const Page = () => {
         <AnimeList horizontal api={data} score type />
       )}
 
-      <Pagination
-        page={page}
-        lastPage={data?.pagination?.last_visible_page}
-        setPage={setPage}
-      />
+      <Pagination page={page} lastPage={data?.pagination?.last_visible_page} />
     </section>
   );
 };
