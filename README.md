@@ -1,7 +1,7 @@
 
 # Anime Vibe
 
-Website created to be a source of information for anime lovers
+A website created to be a source of information for anime lovers
 
 
 ## Tech Stack
