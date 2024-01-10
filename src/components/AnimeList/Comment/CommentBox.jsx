@@ -57,7 +57,7 @@ const CommentBox = async ({ anime_mal_id }) => {
                 })}
               </section>
 
-              <p>{comment.comment}</p>
+              <p className="text-sm md:text-base">{comment.comment}</p>
             </div>
           </section>
         );

@@ -14,6 +14,7 @@ import Link from "next/link";
 const Page = async ({ params: { id } }) => {
   //user session & get data from collection
   const user = await authUserSession();
+
   const collection = await prisma.collection.findFirst({
     where: { user_email: user?.email, anime_mal_id: id },
   });
@@ -223,43 +224,41 @@ const Page = async ({ params: { id } }) => {
 
           {characters.data?.length > 0 && <Character data={characters.data} />}
 
-          {!user && (
-            <Link
-              href="/api/auth/signin"
-              className="w-full rounded-lg md:rounded-3xl px-5 py-1.5 bg-Black-15 text-Absolute-White text-center font-medium tracking-wide transition-colors duration-300 hover:bg-Absolute-White hover:text-Black-8"
-            >
-              <p>
-                Sign in and start collecting your favorite shows, leaving
-                comments, and share your thoughts with a rating.
-              </p>
-            </Link>
-          )}
+          <section className="flex flex-col">
+            <Header title="COMMENT" />
 
-          {comments.length > 0 && (
-            <section className="flex flex-col">
-              <Header title="COMMENT" />
+            <div className="flex flex-col gap-3">
+              {!user && (
+                <Link
+                  href="/api/auth/signin"
+                  className="w-full rounded-lg px-5 py-1.5 bg-Black-10 text-Absolute-White text-center font-medium tracking-wide transition-colors duration-300 hover:bg-Absolute-White hover:text-Black-8"
+                >
+                  <p>
+                    Sign in and start collecting your favorite shows, leaving
+                    comments, and share your thoughts with a rating.
+                  </p>
+                </Link>
+              )}
 
-              <div className="flex flex-col gap-3">
-                {user && (
-                  <CommentInput
-                    anime_mal_id={id}
-                    user_email={user.email}
-                    user_image={user.image}
-                    username={user.name}
-                    anime_title={anime.data?.title}
-                  />
-                )}
+              {user && (
+                <CommentInput
+                  anime_mal_id={id}
+                  user_email={user.email}
+                  user_image={user.image}
+                  username={user.name}
+                  anime_title={anime.data?.title}
+                />
+              )}
 
-                <CommentBox anime_mal_id={id} />
-              </div>
-            </section>
-          )}
+              <CommentBox anime_mal_id={id} />
+            </div>
+          </section>
         </div>
 
         {suggestion.data?.length > 0 && (
           <section className="flex flex-col">
             <Header title="RECOMMENDED" />
-            <AnimeList horizontal api={suggestion} className="md:w-80"/>
+            <AnimeList horizontal api={suggestion} className="md:w-80" />
           </section>
         )}
       </section>
