@@ -19,10 +19,6 @@ const Page = async ({ params: { id } }) => {
     where: { user_email: user?.email, anime_mal_id: id },
   });
 
-  const comments = await prisma.comment.findMany({
-    where: { anime_mal_id: id },
-  });
-
   //get anime data
   const anime = await getAnimeResponse(`anime/${id}/full`);
 
@@ -102,7 +98,7 @@ const Page = async ({ params: { id } }) => {
 
               <article className="flex flex-col gap-3 text-Absolute-White text-base leading-7">
                 <div className="flex flex-col gap-3 rounded-lg md:flex-row md:gap-7 ">
-                  <div className="flex flex-col gap-2 w-auto h-auto">
+                  <div className="flex flex-col gap-3 w-auto h-auto">
                     <Image
                       priority
                       src={anime.data?.images?.webp.large_image_url}
@@ -124,16 +120,50 @@ const Page = async ({ params: { id } }) => {
                   </div>
 
                   <section className="flex flex-col gap-3 w-full">
-                    <div className="flex flex-col md:gap-1">
-                      <p className="text-Absolute-White font-bold text-2xl md:text-4xl">
-                        {anime.data?.title}
-                      </p>
-
-                      {anime.data?.rating && (
-                        <p className="text-Grey-60 text-sm">
-                          {anime.data.rating}
+                    <div className="flex flex-col gap-3">
+                      <div className="flex flex-col md:gap-1">
+                        <p className="text-Absolute-White font-bold text-2xl md:text-4xl md:leading-9">
+                          {anime.data?.title}
                         </p>
-                      )}
+
+                        {anime.data?.rating && (
+                          <p className="text-Grey-60 text-sm leading-4">
+                            {anime.data.rating}
+                          </p>
+                        )}
+                      </div>
+
+                      {anime.data?.type != "Music" &&
+                        anime.data?.trailer.url && (
+                          <Link
+                            target="_blank"
+                            href={anime.data?.trailer.url}
+                            rel="noopener noreferrer"
+                            className="flex py-1 px-2 rounded-lg w-fit bg-Red-55 transition-colors hover:bg-opacity-50"
+                          >
+                            <p className="text-sm">Watch Trailer</p>
+                          </Link>
+                        )}
+
+                      {anime.data?.type == "Music" &&
+                        anime.data?.external.length > 0 && (
+                          <>
+                            {anime.data.external.map((mv) => {
+                              if (mv.name == "YouTube") {
+                                return (
+                                  <Link
+                                    target="_blank"
+                                    href={mv.url}
+                                    rel="noopener noreferrer"
+                                    className="flex py-1 px-2 rounded-lg w-fit bg-Red-55 transition-colors hover:bg-opacity-50"
+                                  >
+                                    <p className="text-sm">Watch MV</p>
+                                  </Link>
+                                );
+                              }
+                            })}
+                          </>
+                        )}
                     </div>
 
                     <section className="w-full text-Absolute-White">
