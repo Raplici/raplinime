@@ -16,7 +16,6 @@ const Page = async () => {
     "schedules",
     `filter=${fullDay}&sfw=true`
   );
-  ////
 
   // get recommendation
   let recommendedAnime = await getNestedAnimeResponse(
@@ -24,11 +23,9 @@ const Page = async () => {
     "entry"
   );
   recommendedAnime = reproduce(recommendedAnime, 7);
-  ////
 
   // get top anime
   const topAnime = await getAnimeResponse("top/anime", "sfw&limit=21");
-  ////
 
   return (
     <main className="container flex flex-col gap-14">
@@ -42,14 +39,16 @@ const Page = async () => {
             <AnimeList api={topAnime} />
           </section>
 
-          <section className="flex flex-col">
-            <Header title="RECOMMENDATION" />
+          {recommendedAnime?.data?.length > 0 && (
+            <section className="flex flex-col">
+              <Header title="RECOMMENDATION" />
 
-            <AnimeList api={recommendedAnime} />
-          </section>
+              <AnimeList api={recommendedAnime} />
+            </section>
+          )}
         </div>
 
-        {schedules.data?.length > 0 && (
+        {schedules?.data?.length > 0 && (
           <section className="flex flex-col">
             <Header title="AIRING TODAY" />
 
