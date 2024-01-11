@@ -9,7 +9,7 @@ const fullDay = date.toLocaleDateString("en-US", { weekday: "long" });
 const Page = () => {
   return (
     <main className="container flex flex-col gap-14">
-      <Banner />
+      {/* <Banner /> */}
 
       <section className="flex flex-col gap-7 xl:flex-row">
         <div className="flex flex-col gap-7">
