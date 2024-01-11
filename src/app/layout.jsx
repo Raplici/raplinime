@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
           </div>
 
           <div className="flex rounded-t-lg px-5 py-3 mt-3 md:mt-0 w-full bg-Black-12 items-center text-Grey-60">
-            <div className="container flex flex-col h-16 gap-0.5 justify-center text-center items-center text-sm md:text-base">
+            <div className="container flex flex-col h-12 gap-0.5 justify-center text-center items-center text-sm md:text-base">
               <p>Created by Raplici.</p>
               <p>
                 Thank you for visiting this website. Hopefully, this can provide the
