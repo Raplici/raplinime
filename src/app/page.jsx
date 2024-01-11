@@ -39,22 +39,18 @@ const Page = async () => {
             <AnimeList api={topAnime} />
           </section>
 
-          {recommendedAnime?.data?.length > 0 && (
-            <section className="flex flex-col">
-              <Header title="RECOMMENDATION" />
+          <section className="flex flex-col">
+            <Header title="RECOMMENDATION" />
 
-              <AnimeList api={recommendedAnime} />
-            </section>
-          )}
+            <AnimeList api={recommendedAnime} />
+          </section>
         </div>
 
-        {schedules?.data?.length > 0 && (
-          <section className="flex flex-col">
-            <Header title="AIRING TODAY" />
+        <section className="flex flex-col">
+          <Header title="AIRING TODAY" />
 
-            <AnimeList horizontal api={schedules} className="xl:w-80" />
-          </section>
-        )}
+          <AnimeList horizontal api={schedules} className="xl:w-80" />
+        </section>
       </section>
     </main>
   );

@@ -139,25 +139,24 @@ const Page = async ({ params: { id } }) => {
                           </Link>
                         )}
 
-                      {anime.data?.type == "Music" &&
-                        anime.data?.external.length > 0 && (
-                          <>
-                            {anime.data.external.map((mv) => {
-                              if (mv.name == "YouTube") {
-                                return (
-                                  <Link
-                                    target="_blank"
-                                    href={mv.url}
-                                    rel="noopener noreferrer"
-                                    className="flex py-1 px-2 rounded-lg w-fit bg-Red-55 transition-colors hover:bg-opacity-50"
-                                  >
-                                    <p className="text-sm">Watch MV</p>
-                                  </Link>
-                                );
-                              }
-                            })}
-                          </>
-                        )}
+                      {anime.data?.type == "Music" && anime.data?.external && (
+                        <>
+                          {anime.data.external.map((mv) => {
+                            if (mv.name == "YouTube") {
+                              return (
+                                <Link
+                                  target="_blank"
+                                  href={mv.url}
+                                  rel="noopener noreferrer"
+                                  className="flex py-1 px-2 rounded-lg w-fit bg-Red-55 transition-colors hover:bg-opacity-50"
+                                >
+                                  <p className="text-sm">Watch MV</p>
+                                </Link>
+                              );
+                            }
+                          })}
+                        </>
+                      )}
                     </div>
 
                     <section className="w-full text-Absolute-White">
@@ -279,11 +278,15 @@ const Page = async ({ params: { id } }) => {
           </section>
         </div>
 
-        {suggestion?.data?.length > 0 && (
-          <section className="flex flex-col">
-            <Header title="RECOMMENDED" />
-            <AnimeList horizontal api={suggestion} className="xl:w-80" />
-          </section>
+        {suggestion && (
+          <>
+            {suggestion.data.length > 0 && (
+              <section className="flex flex-col">
+                <Header title="RECOMMENDED" />
+                <AnimeList horizontal api={suggestion} className="xl:w-80" />
+              </section>
+            )}
+          </>
         )}
       </section>
     </main>
