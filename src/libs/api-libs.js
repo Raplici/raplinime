@@ -4,7 +4,6 @@ export const getAnimeResponse = async (resource, query) => {
   let attempt = 0;
 
   while (true) {
-    // Loop indefinitely until successful
     try {
       response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/${resource}?${query}`
@@ -19,7 +18,7 @@ export const getAnimeResponse = async (resource, query) => {
         anime = await response.json();
         break; // Fetch successful, exit the loop
       } else if (response.status === 429) {
-        const delay = Math.min(5000, 1000 * Math.pow(2, attempt - 1)); // Exponential backoff
+        const delay = attempt < 5 ? attempt * 1000 : attempt * 5000; // Delay increases by 1000 or 5000
 
         console.warn(`API rate limit reached. Retrying in ${delay}ms...`);
 
