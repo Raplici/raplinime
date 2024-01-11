@@ -1,6 +1,7 @@
 export const getAnimeResponse = async (resource, query) => {
   let response;
   let anime;
+  let attempt = 0;
 
   while (true) {
     // Loop indefinitely until successful
