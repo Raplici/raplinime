@@ -34,7 +34,7 @@ const Recommendation = () => {
           entry = reproduce(entry, 7);
           setData(entry);
         }
-      }, 1000);
+      }, 2000);
     }
   }, [recommendation]);
 

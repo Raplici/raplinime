@@ -30,7 +30,7 @@ const Schedules = ({ day }) => {
         if (retry != undefined) {
           setData(retry);
         }
-      }, 1000);
+      }, 3000);
     }
   }, [schedules]);
 
