@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Star, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { authUserSession } from "@/libs/auth-libs";
 import { getAnimeResponse, getNestedAnimeResponse } from "@/libs/api-libs";
+import prisma from "@/libs/prisma";
 
 import Header from "@/components/AnimeList/Header";
 import AnimeList from "@/components/AnimeList";
