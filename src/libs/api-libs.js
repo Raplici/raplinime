@@ -1,8 +1,37 @@
 export const getAnimeResponse = async (resource, query) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/${resource}?${query}`
-  );
-  const anime = await response.json();
+  let response;
+  let anime;
+
+  while (true) {
+    // Loop indefinitely until successful
+    try {
+      response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/${resource}?${query}`
+      );
+
+      if (response.status === 404) {
+        anime = await response.json();
+        break; // Handle 404 here if needed
+      }
+
+      if (response.ok) {
+        anime = await response.json();
+        break; // Fetch successful, exit the loop
+      } else if (response.status === 429) {
+        const delay = Math.min(5000, 1000 * Math.pow(2, attempt - 1)); // Exponential backoff
+
+        console.warn(`API rate limit reached. Retrying in ${delay}ms...`);
+
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        attempt++; // Increment attempt counter for backoff calculation
+      } else {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.error(`API request failed: ${error.message}`);
+    }
+  }
+
   return anime;
 };
 
