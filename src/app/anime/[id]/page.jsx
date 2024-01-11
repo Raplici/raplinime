@@ -194,7 +194,7 @@ const Page = async ({ params: { id } }) => {
                         </div>
                       )}
 
-                      {anime.data?.genres && anime.data?.genres.length > 0 && (
+                      {anime.data?.genres != null && (
                         <div className="w-full flex gap-4">
                           <p className="w-1/6">Genre:</p>
 
@@ -278,7 +278,7 @@ const Page = async ({ params: { id } }) => {
           </section>
         </div>
 
-        {suggestion && (
+        {suggestion != undefined && (
           <>
             {suggestion.data.length > 0 && (
               <section className="flex flex-col">
