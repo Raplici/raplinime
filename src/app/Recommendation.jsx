@@ -11,7 +11,12 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 const Recommendation = () => {
   const { data: recommendation } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/recommendations/anime`,
-    fetcher
+    fetcher,
+    {
+      onErrorRetry: (revalidate) => {
+        setTimeout(() => revalidate(), 2000);
+      },
+    }
   );
 
   const [data, setData] = useState([]);
@@ -23,20 +28,6 @@ const Recommendation = () => {
       setData(entry);
     }
   }, [recommendation]);
-
-  if (recommendation?.status == 429) {
-    setTimeout(() => {
-      const { data: retry } = useSWR(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/recommendations/anime`,
-        fetcher
-      );
-      if (retry != undefined) {
-        let entry = retry.data.flatMap((item) => item["entry"]);
-        entry = reproduce(entry, 7);
-        setData(entry);
-      }
-    }, 2000);
-  }
 
   return (
     <>
