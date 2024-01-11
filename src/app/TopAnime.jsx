@@ -16,7 +16,7 @@ const TopAnime = () => {
 
         if (error.status === 429) {
           console.log(error)
-          setTimeout(() => revalidate({ retryCount }), 5000);
+          setTimeout(() => revalidate({ retryCount }), 1000);
         }
       },
     }

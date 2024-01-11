@@ -15,7 +15,7 @@ const Schedules = ({ day }) => {
         if (retryCount >= 10) return;
 
         if (error.status === 429) {
-          setTimeout(() => revalidate({ retryCount }), 5000);
+          setTimeout(() => revalidate({ retryCount }), 1000);
         }
       },
     }
