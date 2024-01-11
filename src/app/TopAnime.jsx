@@ -11,8 +11,13 @@ const TopAnime = () => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?sfw&limit=21`,
     fetcher,
     {
-      onErrorRetry: (revalidate) => {
-        setTimeout(() => revalidate(), 2000);
+      onErrorRetry: (error, revalidate, { retryCount }) => {
+        if (retryCount >= 10) return;
+
+        if (error.status === 429) {
+          console.log(error)
+          setTimeout(() => revalidate({ retryCount }), 5000);
+        }
       },
     }
   );

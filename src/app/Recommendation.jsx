@@ -13,8 +13,12 @@ const Recommendation = () => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/recommendations/anime`,
     fetcher,
     {
-      onErrorRetry: (revalidate) => {
-        setTimeout(() => revalidate(), 2000);
+      onErrorRetry: (error, revalidate, { retryCount }) => {
+        if (retryCount >= 10) return;
+
+        if (error.status === 429) {
+          setTimeout(() => revalidate({ retryCount }), 5000);
+        }
       },
     }
   );
