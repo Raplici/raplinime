@@ -6,7 +6,7 @@ import TopAnime from "@/app/TopAnime";
 const date = new Date();
 const fullDay = date.toLocaleDateString("en-US", { weekday: "long" });
 
-const Page = async () => {
+const Page = () => {
   return (
     <main className="container flex flex-col gap-14">
       <Banner />
