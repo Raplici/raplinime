@@ -6,7 +6,7 @@ import { ArrowLeft } from "@phosphor-icons/react";
 const Page = () => {
   const router = useRouter();
   return (
-    <section className="md:fixed w-full h-screen flex items-center justify-center">
+    <section className=" w-full h-screen flex items-center justify-center">
       <div className="bg-Black-10 flex flex-col items-center justify-center text-center px-4 md:px-8 lg:px-24 py-8 rounded-lg md:rounded-3xl text-Red-60 gap-3">
         <p className="text-6xl md:text-7xl lg:text-9xl font-bold">404</p>
         <p className="text-2xl md:text-3xl lg:text-5xl font-bold">
