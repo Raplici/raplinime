@@ -25,7 +25,7 @@ const Page = async ({ params: { id } }) => {
   //validate anime data
   if (anime.status == 404) {
     return (
-      <section className="md:fixed w-full h-screen flex items-center justify-center">
+      <section className="w-full h-screen flex items-center justify-center">
         <div className="bg-Black-10 flex flex-col items-center justify-center text-center px-4 md:px-8 lg:px-24 py-8 rounded-lg md:rounded-3xl text-Red-60 gap-3">
           <p className="text-6xl md:text-7xl lg:text-9xl font-bold">404</p>
 
@@ -56,11 +56,6 @@ const Page = async ({ params: { id } }) => {
   ).then((data) => {
     return { data: data?.slice(0, 15) };
   });
-  ////
-
-  //get character
-  const characters = await getAnimeResponse(`anime/${id}/characters`);
-  ////
 
   //date format
   function formatDate(dateString) {
@@ -75,7 +70,6 @@ const Page = async ({ params: { id } }) => {
     // Format the date in the desired format
     return `${day}-${month}-${year}`;
   }
-  ////
 
   //score format
   function formatScore(score) {
@@ -252,7 +246,7 @@ const Page = async ({ params: { id } }) => {
             </section>
           )}
 
-          <Character data={characters.data} />
+          <Character animeId={id} />
 
           <section className="flex flex-col">
             <Header title="COMMENT" />
@@ -285,7 +279,7 @@ const Page = async ({ params: { id } }) => {
           </section>
         </div>
 
-        {suggestion.data?.length > 0 && (
+        {suggestion?.data?.length > 0 && (
           <section className="flex flex-col">
             <Header title="RECOMMENDED" />
             <AnimeList horizontal api={suggestion} className="xl:w-80" />

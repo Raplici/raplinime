@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { XCircle } from "@phosphor-icons/react";
@@ -9,18 +8,20 @@ import Header from "@/components/AnimeList/Header";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-const Character = ({ data }) => {
-  const router = useRouter();
-  if (!data) {
-    return setTimeout(() => {
-      router.refresh();
-    }, 2000);
-  }
+const Character = ({ animeId }) => {
+  const [characters, setCharacters] = useState([]);
 
-  const character = useMemo(
-    () => data.filter((char) => char.role == "Main"),
-    [data]
+  const { data } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/anime/${animeId}/characters`,
+    fetcher
   );
+
+  useEffect(() => {
+    if (data != undefined) {
+      const filterCharacters = data?.data.filter((char) => char.role == "Main");
+      setCharacters(filterCharacters);
+    }
+  }, [data]);
 
   const [characterId, setCharacterId] = useState(null);
   const [isCharacterDetailsVisible, setCharacterDetailsVisible] =
@@ -44,12 +45,12 @@ const Character = ({ data }) => {
 
   return (
     <>
-      {character.length > 0 && (
+      {characters.length > 0 && (
         <section>
           <Header title="MAIN CHARACTER" />
 
           <div className="w-full gap-3 grid md:grid-cols-3 2xl:grid-cols-4 text-Absolute-White">
-            {character.map((char, index) => {
+            {characters.map((char, index) => {
               return (
                 <section
                   key={index}
