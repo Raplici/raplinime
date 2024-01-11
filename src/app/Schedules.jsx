@@ -19,20 +19,20 @@ const Schedules = ({ day }) => {
     if (schedules != undefined) {
       setData(schedules);
     }
-
-    if (schedules?.status == 429) {
-      setTimeout(() => {
-        const { data: retry } = useSWR(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/schedules?filter=${day}&sfw=true`,
-          fetcher
-        );
-
-        if (retry != undefined) {
-          setData(retry);
-        }
-      }, 3000);
-    }
   }, [schedules]);
+
+  if (schedules?.status == 429) {
+    setTimeout(() => {
+      const { data: retry } = useSWR(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/schedules?filter=${day}&sfw=true`,
+        fetcher
+      );
+
+      if (retry != undefined) {
+        setData(retry);
+      }
+    }, 3000);
+  }
 
   return (
     <>

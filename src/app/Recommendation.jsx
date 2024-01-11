@@ -22,21 +22,21 @@ const Recommendation = () => {
       entry = reproduce(entry, 7);
       setData(entry);
     }
-
-    if (recommendation?.status == 429) {
-      setTimeout(() => {
-        const { data: retry } = useSWR(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/recommendations/anime`,
-          fetcher
-        );
-        if (retry != undefined) {
-          let entry = retry.data.flatMap((item) => item["entry"]);
-          entry = reproduce(entry, 7);
-          setData(entry);
-        }
-      }, 2000);
-    }
   }, [recommendation]);
+
+  if (recommendation?.status == 429) {
+    setTimeout(() => {
+      const { data: retry } = useSWR(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/recommendations/anime`,
+        fetcher
+      );
+      if (retry != undefined) {
+        let entry = retry.data.flatMap((item) => item["entry"]);
+        entry = reproduce(entry, 7);
+        setData(entry);
+      }
+    }, 2000);
+  }
 
   return (
     <>

@@ -19,17 +19,17 @@ const TopAnime = () => {
     if (topAnime != undefined) {
       setData(topAnime);
     }
-
-    if (topAnime?.status == 429) {
-      setTimeout(() => {
-        const { data: retry } = useSWR(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?sfw&limit=21`,
-          fetcher
-        );
-        setData(retry);
-      }, 1000);
-    }
   }, [topAnime]);
+
+  if (topAnime?.status == 429) {
+    setTimeout(() => {
+      const { data: retry } = useSWR(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?sfw&limit=21`,
+        fetcher
+      );
+      setData(retry);
+    }, 1000);
+  }
 
   return (
     <>
