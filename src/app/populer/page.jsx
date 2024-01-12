@@ -41,8 +41,8 @@ const Page = () => {
   //fetch data
   const { data } = useSWR(
     selectedType === ""
-      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?page=${page}`
-      : `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?page=${page}&type=${selectedType}`,
+      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?sfw&page=${page}`
+      : `${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?sfw&page=${page}&type=${selectedType}`,
     fetcher
   );
 
@@ -77,7 +77,7 @@ const Page = () => {
   return (
     <section className="container">
       <div className="flex flex-col md:items-center md:flex-row md:gap-10">
-        <Header title={`TOP ANIME #${page}`} />
+        <Header title={`Most Popular #${page}`} />
         <div className="flex gap-3 overflow-x-auto mb-3 items-center ">
           {typeQuery.map((type, index) => (
             <button
