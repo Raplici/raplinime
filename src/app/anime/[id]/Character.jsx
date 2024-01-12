@@ -59,6 +59,7 @@ const Character = ({ animeId }) => {
                 >
                   <div className="w-auto h-auto">
                     <Image
+                      unoptimized
                       src={char.character.images.webp.image_url}
                       alt={char.character.images.webp.image_url}
                       width={64}
@@ -110,6 +111,7 @@ const Character = ({ animeId }) => {
                   <article className="flex flex-col gap-7 rounded-lg md:flex-row ">
                     <div className="w-auto h-auto">
                       <Image
+                        unoptimized
                         src={details?.data.images?.webp.image_url}
                         alt={details?.data.images?.webp.image_url}
                         width={384}

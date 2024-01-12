@@ -95,6 +95,7 @@ const Page = async ({ params: { id } }) => {
                 <div className="flex flex-col gap-3 rounded-lg md:flex-row md:gap-7 ">
                   <div className="flex flex-col gap-3 w-auto h-auto">
                     <Image
+                      unoptimized
                       priority
                       src={anime.data?.images?.webp.image_url}
                       alt={anime.data?.images?.jpg.image_url}

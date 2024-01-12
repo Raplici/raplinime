@@ -33,6 +33,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
           >
             <div className="w-auto h-auto">
               <Image
+                unoptimized
                 priority
                 src={anime.images.webp.image_url}
                 alt={anime.images.jpg.image_url}
@@ -79,6 +80,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
           >
             <div className="w-auto h-auto">
               <Image
+                unoptimized
                 priority
                 src={anime.images.webp.image_url}
                 alt={anime.images.jpg.image_url}
