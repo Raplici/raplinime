@@ -5,7 +5,10 @@ import Header from "@/components/AnimeList/Header";
 const Page = async ({ params }) => {
   const { keyword } = params;
   const decodedKeyword = decodeURI(keyword);
-  const searchAnime = await getAnimeResponse("anime", `q=${decodedKeyword}`);
+  const searchAnime = await getAnimeResponse(
+    "anime",
+    `q=${decodedKeyword}&sfw`
+  );
 
   return (
     <section className="container">
