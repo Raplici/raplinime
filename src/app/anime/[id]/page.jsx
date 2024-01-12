@@ -97,8 +97,8 @@ const Page = async ({ params: { id } }) => {
                     <Image
                       unoptimized
                       priority
-                      src={anime.data?.images?.webp.image_url}
-                      alt={anime.data?.images?.jpg.image_url}
+                      src={anime.data?.images?.webp.large_image_url}
+                      alt={anime.data?.images?.jpg.large_image_url}
                       width={384}
                       height={542}
                       className="object-cover object-center rounded-lg aspect-[3/4] w-full md:w-80"
