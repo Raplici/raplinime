@@ -82,7 +82,6 @@ const Page = () => {
     }
   }, [data]);
 
-  console.log(isEmpty);
   return (
     <section className="container">
       <div className="flex flex-col md:items-center md:flex-row md:gap-10">
