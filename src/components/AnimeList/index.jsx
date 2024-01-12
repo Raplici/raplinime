@@ -34,8 +34,8 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
             <div className="w-auto h-auto">
               <Image
                 priority
-                src={anime.images.webp.large_image_url}
-                alt={anime.images.jpg.large_image_url}
+                src={anime.images.webp.image_url}
+                alt={anime.images.jpg.image_url}
                 width={256}
                 height={256}
                 className="object-cover object-center rounded-lg aspect-[3/4]"
@@ -80,8 +80,8 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
             <div className="w-auto h-auto">
               <Image
                 priority
-                src={anime.images.webp.large_image_url}
-                alt={anime.images.jpg.large_image_url}
+                src={anime.images.webp.image_url}
+                alt={anime.images.jpg.image_url}
                 width={64}
                 height={100}
                 className="object-cover object-center rounded-l-lg aspect-[3/4] "

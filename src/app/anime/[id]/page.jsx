@@ -96,8 +96,8 @@ const Page = async ({ params: { id } }) => {
                   <div className="flex flex-col gap-3 w-auto h-auto">
                     <Image
                       priority
-                      src={anime.data?.images?.webp.large_image_url}
-                      alt={anime.data?.images?.jpg.large_image_url}
+                      src={anime.data?.images?.webp.image_url}
+                      alt={anime.data?.images?.jpg.image_url}
                       width={384}
                       height={542}
                       className="object-cover object-center rounded-lg aspect-[3/4] w-full md:w-80"
@@ -108,7 +108,7 @@ const Page = async ({ params: { id } }) => {
                         anime_mal_id={id}
                         user_email={user.email}
                         anime_title={anime.data?.title}
-                        anime_image={anime.data?.images.webp.large_image_url}
+                        anime_image={anime.data?.images.webp.image_url}
                         collection={collection}
                       />
                     )}
