@@ -62,9 +62,9 @@ const Character = ({ animeId }) => {
                       unoptimized
                       src={char.character.images.webp.image_url}
                       alt={char.character.images.webp.image_url}
-                      width={64}
-                      height={100}
-                      className="object-cover object-center rounded-l-lg aspect-[3/4] w-auto h-auto"
+                      width={50.56}
+                      height={67.41}
+                      className="object-cover object-center rounded-l-lg aspect-[3/4]"
                     />
                   </div>
 
