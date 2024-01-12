@@ -89,7 +89,7 @@ const Page = async ({ params: { id } }) => {
         <div className="flex flex-col gap-7 w-full ">
           {anime.data && (
             <section className="flex flex-col">
-              <Header title="OVERVIEW" />
+              <Header title="Overview" />
 
               <article className="flex flex-col gap-3 text-Absolute-White text-base leading-7">
                 <div className="flex flex-col gap-3 rounded-lg md:flex-row md:gap-7 ">
@@ -249,7 +249,7 @@ const Page = async ({ params: { id } }) => {
           <Character animeId={id} />
 
           <section className="flex flex-col">
-            <Header title="COMMENT" />
+            <Header title="Comment" />
 
             <div className="flex flex-col gap-3">
               {!user && (
@@ -283,7 +283,7 @@ const Page = async ({ params: { id } }) => {
           <>
             {suggestion.data.length > 0 && (
               <section className="flex flex-col">
-                <Header title="RECOMMENDED" />
+                <Header title="Recommended" />
                 <AnimeList horizontal api={suggestion} className="xl:w-80" />
               </section>
             )}

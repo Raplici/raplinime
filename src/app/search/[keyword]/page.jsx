@@ -9,7 +9,7 @@ const Page = async ({ params }) => {
 
   return (
     <section className="container">
-      <Header title={`SEARCH RESULTS FOR '${decodedKeyword}...' `} />
+      <Header title={`Search Result For '${decodedKeyword}...' `} />
       {searchAnime.data?.length > 0 ? (
         <AnimeList api={searchAnime} />
       ) : (

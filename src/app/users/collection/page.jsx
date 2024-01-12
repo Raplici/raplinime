@@ -17,7 +17,7 @@ const Page = async () => {
 
   return (
     <section className="container w-full">
-      <Header title="COLLECTION" />
+      <Header title="Collection" />
 
       {!collection.length > 0 ? (
         <div className="flex justify-center items-center h-40 text-Grey-60">

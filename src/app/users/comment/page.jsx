@@ -66,7 +66,7 @@ const page = async () => {
   return (
     <>
       <article className="container w-full text-Absolute-White">
-        <Header title="COMMENT HISTORY" />
+        <Header title="Comment History" />
 
         {!comments.length > 0 ? (
           <div className="flex justify-center items-center h-40 text-Grey-60">

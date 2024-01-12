@@ -47,7 +47,7 @@ const Character = ({ animeId }) => {
     <>
       {characters.length > 0 && (
         <section>
-          <Header title="MAIN CHARACTER" />
+          <Header title="Main Character" />
 
           <div className="w-full gap-3 grid md:grid-cols-3 2xl:grid-cols-4 text-Absolute-White">
             {characters.map((char, index) => {
