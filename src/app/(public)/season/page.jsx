@@ -1,5 +1,5 @@
 import Navbar from "@/src/components/Navbar";
-import Seasonal from "@/src/app/season/Seasonal";
+import Seasonal from "@/src/app/(public)/season/Seasonal";
 
 const page = () => {
   return (
