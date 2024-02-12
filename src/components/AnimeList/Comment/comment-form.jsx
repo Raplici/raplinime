@@ -65,6 +65,7 @@ const CommentForm = ({
     startTransition(() => {
       postComment(values).then((data) => {
         if (data?.success) {
+          router.refresh();
           toast.success(data.success);
         }
 
@@ -73,7 +74,6 @@ const CommentForm = ({
         }
       });
 
-      router.refresh();
     });
   };
 

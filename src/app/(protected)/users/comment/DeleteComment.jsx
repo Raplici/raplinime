@@ -18,6 +18,7 @@ const DeleteComment = ({ id_comment }) => {
     startTransition(() => {
       deleteComment(values).then((data) => {
         if (data?.success) {
+          router.refresh();
           toast.success(data.success);
         }
 
@@ -26,7 +27,6 @@ const DeleteComment = ({ id_comment }) => {
         }
       });
 
-      router.refresh();
     });
   };
 

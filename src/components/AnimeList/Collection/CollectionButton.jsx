@@ -22,10 +22,10 @@ const CollectionButton = ({
     startTransition(() => {
       collection(values).then((data) => {
         if (data?.success) {
+          router.refresh();
           toast.success(data.success);
         }
       });
-      router.refresh();
     });
   };
 

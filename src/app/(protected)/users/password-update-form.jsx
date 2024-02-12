@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition, useState } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
@@ -22,8 +22,8 @@ const PasswordUpdatePage = () => {
           }
 
           if (data?.success) {
-            toast.success(data.success);
             router.refresh();
+            toast.success(data.success);
           }
         })
         .catch(() => setError("Something went wrong!"));

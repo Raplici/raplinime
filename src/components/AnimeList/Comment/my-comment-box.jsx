@@ -75,10 +75,10 @@ const MyCommentBox = ({ comment }) => {
         }
 
         if (data?.success) {
+          router.refresh();
           toast.success(data.success);
         }
       });
-      router.refresh();
     });
   };
 
@@ -118,11 +118,11 @@ const MyCommentBox = ({ comment }) => {
         }
 
         if (data?.success) {
+          router.refresh();
           toast.success(data.success);
+          setIsEdit(false);
         }
       });
-      router.refresh();
-      setIsEdit(false);
     });
   };
 

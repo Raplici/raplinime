@@ -17,10 +17,10 @@ const DeleteCollection = ({ user_email, anime_mal_id }) => {
     startTransition(() => {
       collection(values).then((data) => {
         if (data?.success) {
+          router.refresh();
           toast.success(data.success);
         }
       });
-      router.refresh();
     });
   };
 

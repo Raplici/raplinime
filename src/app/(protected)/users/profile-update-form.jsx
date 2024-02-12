@@ -24,8 +24,8 @@ const ProfileUpdatePage = () => {
           }
 
           if (data?.success) {
-            toast.success(data.success);
             router.refresh();
+            toast.success(data.success);
           }
         })
         .catch(() => setError("Something went wrong!"));
