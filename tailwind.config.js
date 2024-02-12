@@ -1,19 +1,9 @@
-/** @type {import('tailwindcss').Config} */
-
 const { fontFamily } = require("tailwindcss/defaultTheme");
-module.exports = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+
+module.exports = /** @satisfies {import('tailwindcss').Config} */ ({
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       strokeWidth: {
         1.5: "1.5px",
       },
@@ -23,15 +13,11 @@ module.exports = {
         },
       },
     },
-    //basic custom color
+    fontFamily: {
+      manrope: ["Manrope"],
+    },
     colors: {
       transparent: "transparent",
-      color: {
-        primary: "#eeeeee",
-        accent: "#ffc639",
-        secondary: "#393e46",
-        dark: "#222831",
-      },
       Absolute: {
         Black: "#000000",
         White: "#ffffff",
@@ -66,7 +52,14 @@ module.exports = {
         97: "#F7F7F8",
         99: "#FCFCFD",
       },
+      Form: {
+        Blue: "#1A56DB",
+        Green: "#238626",
+        White: "#F9FAFB",
+        Red: "#F85149"
+      },
     },
+
     screens: {
       xs: "360px",
       sm: "640px",
@@ -82,5 +75,4 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-};
+});

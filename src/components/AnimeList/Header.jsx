@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Play } from "@phosphor-icons/react/dist/ssr";
 
-const Header = ({ title, link }) => {
+const Header = ({ title, link, className }) => {
   return (
-    <div className="flex justify-between items-center text-color-primary mb-3 md:h-12">
-      <div className="flex items-center gap-3">
+    <div
+      className={`flex justify-between items-center text-Absolute-White mb-3 md:h-12 ${className}`}
+    >
+      <div className="flex items-center gap-3 cursor-default">
         <div className="text-Red-60">
           <Play size={20} weight="fill" />
         </div>
@@ -17,11 +19,9 @@ const Header = ({ title, link }) => {
       {link && (
         <Link
           href={link}
-          className="group py-1 px-3 rounded-3xl border-2 border-Black-12 text-Absolute-White transition-colors hover:bg-Black-15 hover:border-Black-15 "
+          className="py-1 px-3 rounded-3xl bg-Grey-60/10 transition-colors hover:bg-Grey-60/20"
         >
-          <p className="group-hover:text-Absolute-White text-sm text-Grey-60">
-            see more
-          </p>
+          <p className="text-sm">see more</p>
         </Link>
       )}
     </div>

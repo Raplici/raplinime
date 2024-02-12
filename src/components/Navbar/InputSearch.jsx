@@ -11,11 +11,16 @@ const InputSearch = () => {
   const handleSearch = (e) => {
     const keyword = searchRef.current.value;
 
-    if (!keyword || keyword.trim() == "") return;
+    // filter non-alphanumeric
+    const regex = /[^\w\s]/gi;
+    const alphanumeric = keyword.replace(regex, "");
+
+    if (!alphanumeric || alphanumeric.trim() == "") return;
 
     if (e.key === "Enter" || e.type === "click") {
       e.preventDefault();
-      router.push(`/search/${keyword}`);
+
+      router.push(`/search/${alphanumeric}`);
     }
   };
 

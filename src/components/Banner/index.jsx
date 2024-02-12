@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import imageFrieren from "@public/images/Frieren.webp";
-import imageJijitsu from "@public/images/JJK.webp";
-import imageYourName from "@public/images/your_name.webp";
-import imageReZero from "@public/images/ReZero.webp";
+import imageFrieren from "@/public/images/Frieren.webp";
+import imageJijitsu from "@/public/images/JJK.webp";
+import imageYourName from "@/public/images/your_name.webp";
+import imageReZero from "@/public/images/ReZero.webp";
 import { CaretRight, CaretLeft, Star, Circle } from "@phosphor-icons/react";
 
 const Banner = () => {
@@ -92,25 +92,25 @@ const Banner = () => {
           style={{
             backgroundImage: `url(${slides[currentIndex].url})`,
           }}
-          className=" bg-cover bg-center h-[360px] rounded-t-2xl md:h-[680px] duration-500"
+          className=" bg-cover bg-center h-[360px] rounded-t-2xl md:h-[680px] duration-300 transition-all"
         />
       </div>
 
-      <button
+      <span
         onClick={prevSlide}
-        className="absolute z-30 left-1 top-1/3 md:top-1/2 text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg hover:bg-Absolute-White hover:border-Absolute-White hover:text-Black-8 transition md:p-3 md:left-5"
+        className="absolute z-30 left-1 top-1/3 md:top-1/2 cursor-pointer text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg hover:bg-Absolute-White hover:border-Absolute-White hover:text-Black-8 transition md:p-3 md:left-5"
       >
         <CaretLeft size={20} />
-      </button>
+      </span>
 
-      <button
+      <span
         onClick={nextSlide}
-        className="absolute z-30 right-1 top-1/3 md:top-1/2 text-xs text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg hover:bg-Absolute-White hover:border-Absolute-White  hover:text-Black-8 transition md:p-3 md:right-5"
+        className="absolute z-30 right-1 top-1/3 md:top-1/2 cursor-pointer text-xs text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg hover:bg-Absolute-White hover:border-Absolute-White  hover:text-Black-8 transition md:p-3 md:right-5"
       >
         <CaretRight size={20} />
-      </button>
+      </span>
 
-      <section className="absolute inset-x-0 bottom-0 z-20 text-Absolute-White ">
+      <section className="absolute cursor-default inset-x-0 bottom-0 z-20 text-Absolute-White ">
         <div className="flex flex-col items-start text-start w-full gap-2.5 px-2 pb-5 lg:w-2/3 md:p-20 md:gap-5">
           <div className="flex flex-col gap-1 md:gap-2">
             <p className="text-lg font-bold md:text-3xl">

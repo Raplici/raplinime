@@ -1,19 +1,21 @@
-import Link from "next/link";
-import { authUserSession } from "@/libs/auth-libs";
-import { UserCircle } from "@phosphor-icons/react/dist/ssr";
-import Profile from "@/components/Navbar/Profile";
+"use client";
 
-const UserActionButton = async () => {
-  const user = await authUserSession();
+import Link from "next/link";
+import { UserCircle } from "@phosphor-icons/react/dist/ssr";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import UserButton from "@/src/components/Navbar/UserButton";
+
+const UserAction = () => {
+  const user = useCurrentUser();
 
   return (
     <div className="flex">
       {user ? (
-        <Profile imgSrc={user?.image} />
+        <UserButton />
       ) : (
         <Link
-          href="/api/auth/signin"
-          className="flex flex-none text-Absolute-White rounded-lg border border-Black-15 py-2 px-3 gap-1.5 hover:bg-Absolute-White transition-colors hover:text-Black-8 md:rounded-3xl"
+          href="/auth/login"
+          className="flex flex-none rounded-lg py-2 px-3 gap-1.5 bg-Absolute-White text-Black-8 transition-colors hover:bg-opacity-50 md:rounded-3xl"
         >
           <UserCircle size={24} />
           <p>Sign In</p>
@@ -23,4 +25,4 @@ const UserActionButton = async () => {
   );
 };
 
-export default UserActionButton;
+export default UserAction;

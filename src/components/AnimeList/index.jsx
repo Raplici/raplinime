@@ -29,7 +29,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
           <Link
             href={`/anime/${anime.mal_id}`}
             key={index}
-            className="flex flex-col gap-2 cursor-pointer text-color-primary transition-all hover:text-Red-60"
+            className="flex flex-col gap-2 cursor-pointer text-Absolute-White transition-all hover:text-Red-60"
           >
             <div className="w-auto h-auto">
               <Image
@@ -45,7 +45,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
 
             <div className="flex flex-col gap-1">
               {anime && (
-                <div className="flex gap-3 md:justify-between items-center text-xs text-Grey-60">
+                <div className="flex gap-3 justify-between items-center text-xs text-Grey-60">
                   {anime.score ? (
                     <div className="flex items-center">
                       <Star size={14} className="mr-1" />
@@ -69,6 +69,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
       })}
     </div>
   );
+  
   const cardHorizontal = (
     <div className={`h-max w-full shrink-0 flex flex-col gap-3 ${className}`}>
       {api?.data?.map((anime, index) => {

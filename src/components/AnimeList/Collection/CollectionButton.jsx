@@ -1,76 +1,47 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { collection } from "@/src/actions/collection";
 import { BookmarkSimple } from "@phosphor-icons/react";
+import { useTransition } from "react";
 
 const CollectionButton = ({
   anime_mal_id,
   user_email,
   anime_title,
   anime_image,
-  collection,
+  existingCollection,
 }) => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
-  const handleAddCollection = async () => {
-    event.preventDefault();
+  const onSubmit = () => {
+    const values = { anime_mal_id, user_email, anime_title, anime_image };
 
-    const data = { anime_mal_id, user_email, anime_title, anime_image };
-
-    await toast.promise(
-      fetch("/api/v1/collection", {
-        method: "POST",
-        body: JSON.stringify(data),
-      }),
-      {
-        pending: "Adding to the collection...",
-        success: "Successfully added to collection!",
-        error: "Failed to add to collection, please try again.",
-      }
-    );
-
-    router.refresh();
-  };
-
-  const handleDeleteCollection = async () => {
-    event.preventDefault();
-
-    await toast.promise(
-      fetch(`/api/v1/collection/`, {
-        method: "DELETE",
-        body: JSON.stringify(collection.id),
-      }),
-      {
-        pending: "Remove from collection...",
-        success: "Successfully removed from collection!",
-        error: "Failed to remove from collection, please try again.",
-      }
-    );
-
-    router.refresh();
+    startTransition(() => {
+      collection(values).then((data) => {
+        if (data?.success) {
+          toast.success(data.success);
+        }
+      });
+      router.refresh();
+    });
   };
 
   return (
-    <>
-      {collection ? (
-        <button
-          onClick={handleDeleteCollection}
-          className="flex flex-nowrap rounded-lg justify-center items-center gap-1 p-2 bg-Absolute-White bg-opacity-50 text-Black-8 font-semibold text-sm transition-colors"
-        >
-          <BookmarkSimple size={20} />
-          Remove From Collection
-        </button>
-      ) : (
-        <button
-          onClick={handleAddCollection}
-          className="flex flex-nowrap rounded-lg justify-center items-center gap-1 p-2 bg-Absolute-White text-Black-8 font-semibold text-sm hover:bg-opacity-50 transition-colors"
-        >
-          <BookmarkSimple size={20} />
-          Add To Collection
-        </button>
-      )}
-    </>
+    <button
+      disabled={isPending}
+      onClick={onSubmit}
+      className={`flex flex-nowrap rounded-lg justify-center items-center gap-1 p-2 font-semibold text-sm transition-all ${
+        existingCollection
+          ? "bg-Grey-60/10 text-Absolute-White hover:bg-Grey-60/20"
+          : "bg-Absolute-White text-Black-8 hover:bg-opacity-75"
+      } disabled:cursor-progress disabled:bg-opacity-50`}
+    >
+      <BookmarkSimple size={20} />
+      {existingCollection ? "Remove From Collection" : "Add To Collection"}
+    </button>
   );
 };
 

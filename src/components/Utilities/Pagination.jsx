@@ -26,11 +26,11 @@ const Pagination = ({ page, lastPage }) => {
   );
 
   return (
-    <div className="flex justify-center pt-7 font-semibold text-lg text-color-primary">
+    <div className="flex justify-center pt-7 font-semibold text-lg text-Absolute-White">
       <div className="grid grid-cols-3 gap-3 items-center">
         {page <= 1 ? null : (
           <div className="flex gap-3">
-            <button
+            <span
               onClick={() => {
                 selectedType === ""
                   ? router.push(
@@ -49,12 +49,12 @@ const Pagination = ({ page, lastPage }) => {
                         })
                     );
               }}
-              className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
+              className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretDoubleLeft size={20} weight="duotone" />
-            </button>
+            </span>
 
-            <button
+            <span
               onClick={() => {
                 selectedType === ""
                   ? router.push(
@@ -73,10 +73,10 @@ const Pagination = ({ page, lastPage }) => {
                         })
                     );
               }}
-              className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
+              className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretLeft size={20} weight="duotone" />
-            </button>
+            </span>
           </div>
         )}
 
@@ -90,7 +90,7 @@ const Pagination = ({ page, lastPage }) => {
 
         {page >= lastPage ? null : (
           <div className="flex gap-3">
-            <button
+            <span
               onClick={() => {
                 selectedType === ""
                   ? router.push(
@@ -109,12 +109,12 @@ const Pagination = ({ page, lastPage }) => {
                         })
                     );
               }}
-              className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
+              className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretRight size={20} weight="duotone" />
-            </button>
+            </span>
 
-            <button
+            <span
               onClick={() => {
                 selectedType === ""
                   ? router.push(
@@ -133,10 +133,10 @@ const Pagination = ({ page, lastPage }) => {
                         })
                     );
               }}
-              className="rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
+              className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
               <CaretDoubleRight size={20} weight="duotone" />
-            </button>
+            </span>
           </div>
         )}
       </div>
