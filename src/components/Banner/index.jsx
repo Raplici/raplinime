@@ -96,19 +96,19 @@ const Banner = () => {
         />
       </div>
 
-      <span
+      <div
         onClick={prevSlide}
         className="absolute z-30 left-1 top-1/3 md:top-1/2 cursor-pointer text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg hover:bg-Absolute-White hover:border-Absolute-White hover:text-Black-8 transition md:p-3 md:left-5"
       >
         <CaretLeft size={20} />
-      </span>
+      </div>
 
-      <span
+      <div
         onClick={nextSlide}
         className="absolute z-30 right-1 top-1/3 md:top-1/2 cursor-pointer text-xs text-Absolute-White p-1.5 bg-Black-10 border border-Black-12 rounded-lg hover:bg-Absolute-White hover:border-Absolute-White  hover:text-Black-8 transition md:p-3 md:right-5"
       >
         <CaretRight size={20} />
-      </span>
+      </div>
 
       <section className="absolute cursor-default inset-x-0 bottom-0 z-20 text-Absolute-White ">
         <div className="flex flex-col items-start text-start w-full gap-2.5 px-2 pb-5 lg:w-2/3 md:p-20 md:gap-5">
