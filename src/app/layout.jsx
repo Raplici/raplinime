@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "Raplinime",
+  description:
+    "This website has a complete anime database, with information such as synopsis, genre, release year, and rating.",
 };
 
 export default async function RootLayout({ children }) {
