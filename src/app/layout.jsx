@@ -4,6 +4,8 @@ import { auth } from "@/auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import ProgressBar from "@/src/components/ProgressBar";
+
 export const metadata = {
   title: "Raplinime",
   description:
@@ -20,7 +22,7 @@ export default async function RootLayout({ children }) {
           className="font-manrope bg-Black-8"
           suppressHydrationWarning={true}
         >
-          {children}
+          <ProgressBar>{children}</ProgressBar>
 
           <ToastContainer
             position="top-right"
