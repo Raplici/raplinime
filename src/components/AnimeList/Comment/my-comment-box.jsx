@@ -75,7 +75,6 @@ const MyCommentBox = ({ comment }) => {
         }
 
         if (data?.success) {
-          router.refresh();
           toast.success(data.success);
         }
       });
@@ -108,7 +107,6 @@ const MyCommentBox = ({ comment }) => {
       return;
     }
 
-    // TODO: startTransition, server actions
     const values = { id: comment.id, rating: rating, comment: editedComment };
 
     startTransition(() => {
@@ -118,7 +116,6 @@ const MyCommentBox = ({ comment }) => {
         }
 
         if (data?.success) {
-          router.refresh();
           toast.success(data.success);
           setIsEdit(false);
         }

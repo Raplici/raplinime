@@ -5,6 +5,7 @@ import { db } from "@/src/libs/prisma";
 import { currentUser } from "@/src/libs/auth";
 import bcrypt from "bcryptjs";
 import { ChangePasswordSchema } from "@/src/schemas";
+import { revalidatePath } from "next/cache";
 
 export const updatePassword = async (values) => {
   const validatedFields = await ChangePasswordSchema.validate(values);
@@ -53,5 +54,6 @@ export const updatePassword = async (values) => {
     },
   });
 
+  revalidatePath("/users");
   return { success: "Password changed!" };
 };

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
@@ -21,8 +20,6 @@ const CommentForm = ({
   //rating
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
-
-  const router = useRouter();
 
   const handleInput = (event) => {
     setComment(event.target.value);
@@ -65,7 +62,6 @@ const CommentForm = ({
     startTransition(() => {
       postComment(values).then((data) => {
         if (data?.success) {
-          router.refresh();
           toast.success(data.success);
         }
 
@@ -73,7 +69,6 @@ const CommentForm = ({
           toast.error(data.error);
         }
       });
-
     });
   };
 

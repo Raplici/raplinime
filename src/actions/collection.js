@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/src/libs/prisma";
+import { revalidatePath } from "next/cache";
 
 export const collection = async (values) => {
   const alreadyExist = await db.collection.findFirst({
@@ -12,6 +13,8 @@ export const collection = async (values) => {
       where: { id: alreadyExist.id },
     });
 
+    revalidatePath("/users/collection");
+    revalidatePath(`/anime/${values.anime_mal_id}`);
     return { success: "Successfully removed from your collection!" };
   }
 
@@ -19,5 +22,7 @@ export const collection = async (values) => {
     data: { ...values },
   });
 
+  revalidatePath(`/anime/${values.anime_mal_id}`);
+  revalidatePath('/users/comment')
   return { success: "Successfully added to collection!" };
 };

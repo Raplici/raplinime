@@ -1,7 +1,6 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import { collection } from "@/src/actions/collection";
 import { BookmarkSimple } from "@phosphor-icons/react";
 import { useTransition } from "react";
@@ -13,7 +12,6 @@ const CollectionButton = ({
   anime_image,
   existingCollection,
 }) => {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = () => {
@@ -22,7 +20,6 @@ const CollectionButton = ({
     startTransition(() => {
       collection(values).then((data) => {
         if (data?.success) {
-          router.refresh();
           toast.success(data.success);
         }
       });

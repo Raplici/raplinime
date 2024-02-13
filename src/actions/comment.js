@@ -2,6 +2,7 @@
 
 import { db } from "@/src/libs/prisma";
 import { CommentSchema } from "@/src/schemas";
+import { revalidatePath } from "next/cache";
 
 export const updateComment = async (values) => {
   const validatedFields = await CommentSchema.validate(values);
@@ -27,6 +28,8 @@ export const updateComment = async (values) => {
     },
   });
 
+  revalidatePath(`/anime/${validatedFields.anime_mal_id}`);
+  revalidatePath('/users/comment')
   return { success: "Successfully updated your comment!" };
 };
 
@@ -51,6 +54,8 @@ export const postComment = async (values) => {
     data: { ...validatedFields },
   });
 
+  revalidatePath(`/anime/${anime_mal_id}`);
+  revalidatePath('/users/comment')
   return { success: "Successfully added a comment!" };
 };
 
@@ -67,5 +72,7 @@ export const deleteComment = async (values) => {
     where: { id: selectComment.id },
   });
 
+  revalidatePath(`/anime/${values.anime_mal_id}`)
+  revalidatePath('/users/comment')
   return { success: "successfully deleted your comment!" };
 };

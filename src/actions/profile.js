@@ -6,6 +6,7 @@ import { currentUser } from "@/src/libs/auth";
 import { generateVerificationToken } from "@/src/libs/tokens";
 import { sendVerificationEmail } from "@/src/libs/mail";
 import { ProfileSchema } from "@/src/schemas";
+import { revalidatePath } from "next/cache";
 
 export const profile = async (values) => {
   const validatedFields = await ProfileSchema.validate(values);
@@ -70,5 +71,6 @@ export const profile = async (values) => {
     },
   });
 
+  revalidatePath('/users')
   return { success: "Profile updated!" };
 };
