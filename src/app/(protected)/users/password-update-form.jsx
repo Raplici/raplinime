@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
 import { ChangePasswordSchema } from "@/src/schemas";
@@ -9,8 +8,6 @@ import { updatePassword } from "@/src/actions/update-password";
 import Header from "@/src/components/AnimeList/Header";
 
 const PasswordUpdatePage = () => {
-  const router = useRouter();
-
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (values) => {
@@ -22,7 +19,6 @@ const PasswordUpdatePage = () => {
           }
 
           if (data?.success) {
-            router.refresh();
             toast.success(data.success);
           }
         })

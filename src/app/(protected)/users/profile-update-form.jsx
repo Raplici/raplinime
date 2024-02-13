@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -11,7 +10,6 @@ import Header from "@/src/components/AnimeList/Header";
 
 const ProfileUpdatePage = () => {
   const user = useCurrentUser();
-  const router = useRouter();
 
   const [isPending, startTransition] = useTransition();
 
@@ -24,7 +22,6 @@ const ProfileUpdatePage = () => {
           }
 
           if (data?.success) {
-            router.refresh();
             toast.success(data.success);
           }
         })
