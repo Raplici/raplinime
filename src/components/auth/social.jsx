@@ -31,7 +31,7 @@ export const Social = () => {
         className="flex w-full h-10 py-2.5 px-5 justify-center items-center gap-2 self-stretch rounded-lg border border-Grey-60 transition-colors hover:bg-Form-Blue hover:text-Absolute-White"
       >
         <FaGithub className="h-5 w-5" />
-        <span className="text-sm font-medium">Sign in with Google</span>
+        <span className="text-sm font-medium">Sign in with Github</span>
       </button>
     </div>
   );
