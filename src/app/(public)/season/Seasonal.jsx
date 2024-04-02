@@ -4,13 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useSWR from "swr";
 
+import { fetcher, createQueryString } from "@/src/libs/utils";
 import AnimeList from "@/src/components/AnimeList";
 import Header from "@/src/components/AnimeList/Header";
 import Pagination from "@/src/components/Utilities/Pagination";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-const typeQuery = ["", "TV", "Movie", "OVA", "Special", "ONA", "Music"];
+const typeQuery = ["All", "TV", "Movie", "OVA", "Special", "ONA", "Music"];
 
 const Seasonal = () => {
   const router = useRouter();
@@ -18,31 +17,15 @@ const Seasonal = () => {
   const query = useSearchParams();
   const params = new URLSearchParams(query);
 
-  const selectedType = query.get("type") || "";
+  const selectedType = query.get("type") || "All";
   const page = query.get("page") || 1;
 
   const [loading, setLoading] = useState(false);
-
   const [isEmpty, setIsEmpty] = useState(false);
-
-  const createQueryString = useCallback(
-    (queries) => {
-      const params = new URLSearchParams(queries);
-      return params.toString();
-    },
-    [query]
-  );
-
-  const deleteQueryString = (query) => {
-    params.set("page", 1);
-    params.delete(query);
-    const newUrl = `${pathname}?${params.toString()}`;
-    router.replace(newUrl);
-  };
 
   //fetch data
   const { data } = useSWR(
-    selectedType === ""
+    selectedType === "All"
       ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?sfw&page=${page}`
       : `${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?sfw&page=${page}&filter=${selectedType}`,
     fetcher
@@ -66,7 +49,9 @@ const Seasonal = () => {
   //validasi tipe dan halaman pada url
   useEffect(() => {
     if (!typeQuery.includes(selectedType)) {
-      deleteQueryString("type");
+      params.set("type", "All");
+      const newUrl = `${pathname}?${params.toString()}`;
+      router.replace(newUrl);
     }
 
     if (parseInt(page) < 1) {
@@ -90,26 +75,23 @@ const Seasonal = () => {
           {typeQuery.map((type, index) => (
             <button
               onClick={() => {
-                type === ""
-                  ? deleteQueryString("type")
-                  : router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: 1,
-
-                          type: `${type}`,
-                        })
-                    );
+                router.push(
+                  pathname +
+                    "?" +
+                    createQueryString({
+                      page: 1,
+                      type: `${type}`,
+                    })
+                );
               }}
               key={index}
               className={`py-1 px-5 rounded-lg text-center ${
                 selectedType == type
                   ? "py-2 px-6 bg-Grey-60/10 text-Absolute-White hover:bg-Grey-60/20"
-                  : "border-2 border-Grey-60/20 text-Absolute-White transition-all hover:bg-Grey-60/20 hover:py-2 hover:px-6 hover:border-none"
+                  : "border-2 border-Grey-60/20 text-Absolute-White transition-all hover:bg-Grey-60/20 hover:border-transparent"
               }`}
             >
-              {type === "" ? "All" : type}
+              {type}
             </button>
           ))}
         </div>

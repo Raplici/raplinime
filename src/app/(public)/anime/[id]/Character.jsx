@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { XCircle } from "@phosphor-icons/react";
+import { fetcher } from "@/src/libs/utils";
 import Header from "@/src/components/AnimeList/Header";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Character = ({ animeId }) => {
   const [characters, setCharacters] = useState([]);
