@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
-import { auth } from "@/auth";
 import { getAnimeResponse, getNestedAnimeResponse } from "@/src/libs/api-libs";
 import { db } from "@/src/libs/prisma";
 import { currentUser } from "@/src/libs/auth";
+import { formatScore } from "@/src/libs/utils";
 import Header from "@/src/components/AnimeList/Header";
 import AnimeList from "@/src/components/AnimeList";
 import Character from "@/src/app/(public)/anime/[id]/Character";
@@ -83,17 +83,6 @@ const Page = async ({ params: { id } }) => {
 
     // Format the date in the desired format
     return `${day}-${month}-${year}`;
-  }
-
-  //score format
-  function formatScore(score) {
-    const formattedScore = parseFloat(score);
-
-    if (isNaN(formattedScore)) {
-      return score;
-    }
-
-    return formattedScore.toFixed(2);
   }
 
   return (
@@ -234,19 +223,24 @@ const Page = async ({ params: { id } }) => {
                           </div>
                         )}
 
-                        {anime.data?.score && (
-                          <div className="w-full flex gap-4">
-                            <p className="w-1/6">Score:</p>
+                        {anime.data?.score != 0.0 &&
+                          anime.data?.score !== null && (
+                            <div className="w-full flex gap-4">
+                              <p className="w-1/6">Score:</p>
 
-                            <div className="w-5/6 flex items-center text-Red-60">
-                              <Star size={14} weight="fill" className="mr-2" />
+                              <div className="w-5/6 flex items-center text-Red-60">
+                                <Star
+                                  size={14}
+                                  weight="fill"
+                                  className="mr-2"
+                                />
 
-                              <p className="text-Absolute-White">
-                                {formatScore(anime.data.score)}
-                              </p>
+                                <p className="text-Absolute-White">
+                                  {formatScore(anime.data.score)}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
 
                         {anime.data?.duration && (
                           <div className="w-full flex gap-4">

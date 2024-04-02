@@ -2,6 +2,8 @@ import { Star } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 
+import { formatScore } from "@/src/libs/utils";
+
 const AnimeList = ({ api, horizontal, className, score, type }) => {
   function formatDate(dateString) {
     // Parse the date string using the ISO 8601 format
@@ -10,16 +12,6 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
     // Get year
     const year = date.getFullYear();
     return `${year}`;
-  }
-
-  function formatScore(score) {
-    const formattedScore = parseFloat(score);
-
-    if (isNaN(formattedScore)) {
-      return score;
-    }
-
-    return formattedScore.toFixed(2);
   }
 
   const cardVertical = (
@@ -69,7 +61,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
       })}
     </div>
   );
-  
+
   const cardHorizontal = (
     <div className={`h-max w-full shrink-0 flex flex-col gap-3 ${className}`}>
       {api?.data?.map((anime, index) => {
@@ -92,23 +84,18 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
             </div>
 
             <section className="flex flex-col px-5 w-full">
-              {anime.aired && (
-                <div className="flex gap-3 text-sm text-Grey-60 items-center">
-                  {score && (
-                    <>
-                      {anime.score && (
-                        <div className="flex items-center">
-                          <Star size={14} className="mr-1" />
+              <div className="flex gap-3 text-sm text-Grey-60 items-center">
+                {score && anime.score != 0.0 && anime.score !== null && (
+                  <div className="flex items-center">
+                    <Star size={14} className="mr-1" />
 
-                          <p>{formatScore(anime.score)}</p>
-                        </div>
-                      )}
-                    </>
-                  )}
-                  {type && <p>{anime.type}</p>}
-                  <p>{formatDate(anime.aired.from)}</p>
-                </div>
-              )}
+                    <p>{formatScore(anime.score)}</p>
+                  </div>
+                )}
+
+                {type && <p>{anime.type}</p>}
+                {anime.aired && <p>{formatDate(anime.aired.from)}</p>}
+              </div>
 
               <p className="font-medium md:text-lg line-clamp-1">
                 {anime.title}
