@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { createQueryString } from "@/src/libs/utils";
 
 import {
   CaretDoubleLeft,
@@ -15,15 +15,7 @@ const Pagination = ({ page, lastPage }) => {
   const pathname = usePathname();
   const query = useSearchParams();
 
-  const selectedType = query.get("type") || "";
-
-  const createQueryString = useCallback(
-    (queries) => {
-      const params = new URLSearchParams(queries);
-      return params.toString();
-    },
-    [query]
-  );
+  const selectedType = query.get("type") || "All";
 
   return (
     <div className="flex justify-center pt-7 font-semibold text-lg text-Absolute-White">
@@ -32,22 +24,14 @@ const Pagination = ({ page, lastPage }) => {
           <div className="flex gap-3">
             <span
               onClick={() => {
-                selectedType === ""
-                  ? router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: 1,
-                        })
-                    )
-                  : router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: 1,
-                          type: selectedType,
-                        })
-                    );
+                router.push(
+                  pathname +
+                    "?" +
+                    createQueryString({
+                      page: 1,
+                      type: selectedType,
+                    })
+                );
               }}
               className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
@@ -56,22 +40,14 @@ const Pagination = ({ page, lastPage }) => {
 
             <span
               onClick={() => {
-                selectedType === ""
-                  ? router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: parseInt(page) - 1,
-                        })
-                    )
-                  : router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: parseInt(page) - 1,
-                          type: selectedType,
-                        })
-                    );
+                router.push(
+                  pathname +
+                    "?" +
+                    createQueryString({
+                      page: parseInt(page) - 1,
+                      type: selectedType,
+                    })
+                );
               }}
               className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
@@ -92,22 +68,14 @@ const Pagination = ({ page, lastPage }) => {
           <div className="flex gap-3">
             <span
               onClick={() => {
-                selectedType === ""
-                  ? router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: parseInt(page) + 1,
-                        })
-                    )
-                  : router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: parseInt(page) + 1,
-                          type: selectedType,
-                        })
-                    );
+                router.push(
+                  pathname +
+                    "?" +
+                    createQueryString({
+                      page: parseInt(page) + 1,
+                      type: selectedType,
+                    })
+                );
               }}
               className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
@@ -116,22 +84,14 @@ const Pagination = ({ page, lastPage }) => {
 
             <span
               onClick={() => {
-                selectedType === ""
-                  ? router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: lastPage,
-                        })
-                    )
-                  : router.push(
-                      pathname +
-                        "?" +
-                        createQueryString({
-                          page: lastPage,
-                          type: selectedType,
-                        })
-                    );
+                router.push(
+                  pathname +
+                    "?" +
+                    createQueryString({
+                      page: lastPage,
+                      type: selectedType,
+                    })
+                );
               }}
               className="cursor-pointer rounded-lg p-3 bg-Black-10 hover:bg-Black-15"
             >
