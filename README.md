@@ -1,12 +1,10 @@
+# Raplinime
 
-# Anime Vibe
-
-A website created to be a source of information for anime lovers
-
+Raplinime is a catalog website for anime fans, allowing users to keep track of their favorite series.
 
 ## Tech Stack
 
-Next.js, PostgreSql, Prisma, TailwindCSS
+Next.js, Prisma, Auth.js, Tailwind CSS, Resend Email
 
 ## Environment Variables
 
@@ -31,6 +29,7 @@ To run this project, you will need to add the following environment variables to
 `DIRECT_URL=`
 
 `RESEND_API_KEY=`
+
 ## Run Locally
 
 1. Clone the project
@@ -58,4 +57,3 @@ To run this project, you will need to add the following environment variables to
 ```bash
   npm run dev
 ```
-
