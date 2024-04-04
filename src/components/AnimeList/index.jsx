@@ -2,18 +2,9 @@ import { Star } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 
-import { formatScore } from "@/src/libs/utils";
+import { formatScore, formatDate } from "@/src/libs/utils";
 
 const AnimeList = ({ api, horizontal, className, score, type }) => {
-  function formatDate(dateString) {
-    // Parse the date string using the ISO 8601 format
-    const date = new Date(dateString);
-
-    // Get year
-    const year = date.getFullYear();
-    return `${year}`;
-  }
-
   const cardVertical = (
     <div className="grid gap-x-3 gap-y-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
       {api?.data?.map((anime, index) => {
@@ -94,7 +85,7 @@ const AnimeList = ({ api, horizontal, className, score, type }) => {
                 )}
 
                 {type && <p>{anime.type}</p>}
-                {anime.aired && <p>{formatDate(anime.aired.from)}</p>}
+                {anime.aired && <p>{formatDate(anime.aired.from, "year")}</p>}
               </div>
 
               <p className="font-medium md:text-lg line-clamp-1">

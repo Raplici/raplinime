@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { Trash } from "@phosphor-icons/react";
 import { toast } from "react-toastify";
+import { formatDate } from "@/src/libs/utils";
 import { deleteComment } from "@/src/actions/comment";
 import Header from "@/src/components/AnimeList/Header";
 
@@ -27,19 +28,6 @@ const Comments = ({ groupedComments }) => {
     });
   };
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-
-    const formatter = new Intl.DateTimeFormat("en-GB", {
-      weekday: "long",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-
-    return formatter.format(date);
-  }
-
   return (
     <section className="container w-full text-Absolute-White">
       <Header title="Comment History" />
@@ -61,7 +49,7 @@ const Comments = ({ groupedComments }) => {
                 className="flex flex-col gap-3"
               >
                 <p className="text-lg font-semibold tracking-wide bg-Grey-60/10 p-3 rounded-lg">
-                  {formatDate(group.createdAtDate)}
+                  {formatDate(group.createdAtDate, "fullDate")}
                 </p>
 
                 {group.comments.map((comment, index) => {

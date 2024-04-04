@@ -2,6 +2,7 @@ import { db } from "@/src/libs/prisma";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";
 import avatar from "@/public/images/avatar.svg";
+import { formatDate } from "@/src/libs/utils";
 
 const CommentBox = async ({ user_email, anime_mal_id }) => {
   const comments = await db.comment.findMany({
@@ -13,14 +14,6 @@ const CommentBox = async ({ user_email, anime_mal_id }) => {
       id: "desc",
     },
   });
-
-  function formatDate(dateString) {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("en-GB", options);
-  }
 
   return (
     <div className="flex flex-col">
@@ -42,7 +35,7 @@ const CommentBox = async ({ user_email, anime_mal_id }) => {
               <p className="leading-5">{comment.user.name}</p>
 
               <p className="text-xs text-Grey-60">
-                {formatDate(comment.createdAt)}
+                {formatDate(comment.createdAt, "date")}
               </p>
 
               <section className="flex gap-1">

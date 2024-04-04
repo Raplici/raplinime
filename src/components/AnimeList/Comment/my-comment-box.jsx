@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import avatar from "@/public/images/avatar.svg";
 import { deleteComment, updateComment } from "@/src/actions/comment";
+import { formatDate } from "@/src/libs/utils";
 
 const MyCommentBox = ({ comment }) => {
   const router = useRouter();
@@ -45,14 +46,6 @@ const MyCommentBox = ({ comment }) => {
       document.removeEventListener("click", onClickOutside);
     };
   }, [isDropdownVisible]);
-
-  function formatDate(dateString) {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("en-GB", options);
-  }
 
   const handleInput = (event) => {
     setEditedComment(event.target.value);
@@ -139,7 +132,7 @@ const MyCommentBox = ({ comment }) => {
             <p className="leading-5">{comment.user.name}</p>
 
             <p className="text-xs text-Grey-60">
-              {formatDate(comment.createdAt)}
+              {formatDate(comment.createdAt, "date")}
             </p>
 
             <div className="flex gap-1">

@@ -4,7 +4,7 @@ import { Star, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { getAnimeResponse, getNestedAnimeResponse } from "@/src/libs/api-libs";
 import { db } from "@/src/libs/prisma";
 import { currentUser } from "@/src/libs/auth";
-import { formatScore } from "@/src/libs/utils";
+import { formatScore, formatDate } from "@/src/libs/utils";
 import Header from "@/src/components/AnimeList/Header";
 import AnimeList from "@/src/components/AnimeList";
 import Character from "@/src/app/(public)/anime/[id]/Character";
@@ -70,20 +70,6 @@ const Page = async ({ params: { id } }) => {
   ).then((data) => {
     return { data: data?.slice(0, 15) };
   });
-
-  //date format
-  function formatDate(dateString) {
-    // Parse the date string using the ISO 8601 format
-    const date = new Date(dateString);
-
-    // Get the day, month, and year
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-
-    // Format the date in the desired format
-    return `${day}-${month}-${year}`;
-  }
 
   return (
     <main className="px-5 pb-2.5 md:pb-12">
@@ -181,7 +167,7 @@ const Page = async ({ params: { id } }) => {
                             <p className="w-1/6">Release:</p>
 
                             <p className="w-5/6">
-                              {formatDate(anime.data.aired.from)}
+                              {formatDate(anime.data.aired.from, "date")}
                             </p>
                           </div>
                         )}
